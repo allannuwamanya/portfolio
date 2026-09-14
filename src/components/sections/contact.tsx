@@ -18,6 +18,9 @@ const contactSchema = z.object({
 type ContactForm = z.infer<typeof contactSchema>;
 type FieldErrors = Partial<Record<keyof ContactForm, string>>;
 
+// Replace with your Formspree form ID: https://formspree.io/
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+
 const socialLinks = [
   { href: siteConfig.links.github, icon: Github, label: "GitHub", handle: "@allannuwamanya" },
   { href: siteConfig.links.linkedin, icon: Linkedin, label: "LinkedIn", handle: "in/allan-nuwamanya" },
@@ -51,9 +54,9 @@ export function ContactSection() {
     }
     setStatus("loading");
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(form),
       });
       if (res.ok) {
@@ -84,7 +87,6 @@ export function ContactSection() {
         </motion.div>
 
         <div className="grid gap-10 lg:grid-cols-2">
-          {/* Left — copy & socials */}
           <motion.div
             custom={1}
             variants={fadeUp}
@@ -99,7 +101,6 @@ export function ContactSection() {
             <p className="text-muted-foreground leading-relaxed">
               I&apos;m particularly excited about challenging full-stack problems, startups with strong missions, and open-source collaborations.
             </p>
-
             <div className="mt-2 space-y-3">
               {socialLinks.map(({ href, icon: Icon, label, handle }) => (
                 <a
@@ -117,7 +118,6 @@ export function ContactSection() {
             </div>
           </motion.div>
 
-          {/* Right — form */}
           <motion.div
             custom={2}
             variants={fadeUp}
@@ -139,15 +139,11 @@ export function ContactSection() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   {(["name", "email"] as const).map((field) => (
                     <div key={field} className="flex flex-col gap-1.5">
-                      <label htmlFor={field} className="text-xs font-medium text-muted-foreground capitalize">
-                        {field}
-                      </label>
+                      <label htmlFor={field} className="text-xs font-medium text-muted-foreground capitalize">{field}</label>
                       <input
-                        id={field}
-                        name={field}
+                        id={field} name={field}
                         type={field === "email" ? "email" : "text"}
-                        value={form[field]}
-                        onChange={handleChange}
+                        value={form[field]} onChange={handleChange}
                         placeholder={field === "name" ? "Your name" : "your@email.com"}
                         className={cn(
                           "rounded-lg border bg-secondary px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/50 outline-none transition-colors focus:border-accent focus:ring-1 focus:ring-accent/30",
@@ -162,12 +158,9 @@ export function ContactSection() {
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="subject" className="text-xs font-medium text-muted-foreground">Subject</label>
                   <input
-                    id="subject"
-                    name="subject"
-                    type="text"
-                    value={form.subject}
-                    onChange={handleChange}
-                    placeholder="What&apos;s it about?"
+                    id="subject" name="subject" type="text"
+                    value={form.subject} onChange={handleChange}
+                    placeholder="What's it about?"
                     className={cn(
                       "rounded-lg border bg-secondary px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/50 outline-none transition-colors focus:border-accent focus:ring-1 focus:ring-accent/30",
                       errors.subject ? "border-destructive" : "border-border"
@@ -179,11 +172,8 @@ export function ContactSection() {
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="message" className="text-xs font-medium text-muted-foreground">Message</label>
                   <textarea
-                    id="message"
-                    name="message"
-                    rows={5}
-                    value={form.message}
-                    onChange={handleChange}
+                    id="message" name="message" rows={5}
+                    value={form.message} onChange={handleChange}
                     placeholder="Tell me about your project or idea..."
                     className={cn(
                       "resize-none rounded-lg border bg-secondary px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/50 outline-none transition-colors focus:border-accent focus:ring-1 focus:ring-accent/30",
@@ -196,13 +186,12 @@ export function ContactSection() {
                 {status === "error" && (
                   <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
                     <AlertCircle className="h-4 w-4 flex-shrink-0" />
-                    Something went wrong. Please try again or email me directly.
+                    Something went wrong. Please email me directly.
                   </div>
                 )}
 
                 <button
-                  type="submit"
-                  disabled={status === "loading"}
+                  type="submit" disabled={status === "loading"}
                   className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-accent px-6 text-sm font-semibold text-accent-foreground transition-all hover:bg-accent/90 hover:shadow-glow disabled:opacity-60"
                 >
                   {status === "loading" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
