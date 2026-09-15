@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { ArrowUpRight, Github, ExternalLink, ArrowRight } from "lucide-react";
 import { projectsData } from "@/data/projects";
 import { fadeUp } from "@/lib/animations";
+import { siteConfig } from "@/lib/constants";
 
 const CARD_GRADIENTS = [
   "from-emerald-500/20 via-teal-500/10 to-transparent",
@@ -25,11 +26,11 @@ export function ProjectsSection() {
           className="mb-14 flex flex-wrap items-end justify-between gap-4"
         >
           <div>
-            <p className="font-mono text-sm text-accent mb-3 tracking-wider uppercase">// featured work</p>
-            <h2 className="text-4xl font-black tracking-tight sm:text-5xl">Things I&apos;ve built</h2>
+            <p className="font-mono text-sm text-accent mb-3 tracking-wider uppercase">03 / selected work</p>
+            <h2 className="text-4xl font-black tracking-tight sm:text-5xl">A few things I&apos;ve shipped</h2>
           </div>
-          <Link href="/projects" className="group inline-flex items-center gap-1.5 text-sm font-bold text-accent hover:underline">
-            View all <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          <Link href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-1.5 text-sm font-bold text-accent hover:underline">
+            Browse all repositories <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </motion.div>
 

@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Download, Code2 } from "lucide-react";
+import { Menu, X, Download, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { cn } from "@/lib/utils";
@@ -40,13 +40,10 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="group flex items-center gap-2.5 font-mono text-sm font-black tracking-tight">
             <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl border border-accent/40 bg-accent/10 text-accent transition-all duration-300 group-hover:bg-accent/20 group-hover:scale-110">
-              <Code2 className="h-4 w-4" />
+              <span className="font-sans text-sm font-black">AN</span>
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
-            <span>
-              {siteConfig.author.split(" ")[0]}
-              <span className="text-accent">.</span>
-            </span>
+            <span>{siteConfig.author.split(" ")[0]}<span className="text-accent">.</span></span>
           </Link>
 
           {/* Desktop nav */}
@@ -84,7 +81,8 @@ export function Navbar() {
               className="group inline-flex h-9 items-center gap-1.5 rounded-lg border border-accent/40 bg-accent/10 px-4 text-xs font-bold text-accent transition-all duration-200 hover:bg-accent/20 hover:border-accent hover:shadow-[0_0_12px_hsl(161_84%_39%_/_0.3)]"
             >
               <Download className="h-3 w-3 transition-transform group-hover:-translate-y-0.5" />
-              Resume
+              Résumé
+              <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
           </div>
 
@@ -93,6 +91,8 @@ export function Navbar() {
             <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
+              aria-expanded={isOpen}
+              aria-controls="mobile-navigation"
               className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/60 bg-card/40 text-foreground backdrop-blur-sm transition-colors hover:bg-secondary"
               aria-label={isOpen ? "Close menu" : "Open menu"}
             >
@@ -117,6 +117,9 @@ export function Navbar() {
         {isOpen && (
           <>
             <motion.div
+              id="mobile-navigation"
+              role="dialog"
+              aria-label="Mobile navigation"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               className="fixed inset-0 z-40 bg-background/60 backdrop-blur-md md:hidden"

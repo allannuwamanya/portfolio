@@ -1,42 +1,11 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowRight, Github, Linkedin, Mail, Download, MapPin, Sparkles } from "lucide-react";
 import { siteConfig } from "@/lib/constants";
 import { personalInfo } from "@/data/personal";
 import { staggerContainer, fadeUp } from "@/lib/animations";
-
-const ROLES = [
-  "Full-Stack Engineer",
-  "UI/UX Craftsman",
-  "Open Source Builder",
-  "API Architect",
-  "Performance Nerd",
-];
-
-function useTypewriter(words: string[], speed = 75, deleteSpeed = 35, pause = 2000) {
-  const [index, setIndex] = React.useState(0);
-  const [text, setText] = React.useState("");
-  const [isDeleting, setIsDeleting] = React.useState(false);
-
-  React.useEffect(() => {
-    const current = words[index % words.length];
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        setText(current.substring(0, text.length + 1));
-        if (text.length + 1 === current.length) setTimeout(() => setIsDeleting(true), pause);
-      } else {
-        setText(current.substring(0, text.length - 1));
-        if (text.length - 1 === 0) { setIsDeleting(false); setIndex((i) => i + 1); }
-      }
-    }, isDeleting ? deleteSpeed : speed);
-    return () => clearTimeout(timeout);
-  }, [text, isDeleting, index, words, speed, deleteSpeed, pause]);
-
-  return text;
-}
 
 const socialLinks = [
   { href: siteConfig.links.github, icon: Github, label: "GitHub" },
@@ -45,25 +14,23 @@ const socialLinks = [
 ];
 
 export function HeroSection() {
-  const role = useTypewriter(ROLES);
-
   return (
-    <section id="home" className="relative flex min-h-screen items-center overflow-hidden pt-16">
+    <section id="home" className="relative flex min-h-[88vh] items-center overflow-hidden border-b border-border/70 pt-16">
 
-      {/* ── Animated mesh background ── */}
+      {/* ── Quiet editorial backdrop ── */}
       <div className="mesh-bg absolute inset-0" />
-      <div className="dot-grid absolute inset-0 opacity-30 dark:opacity-15" />
+      <div className="dot-grid absolute inset-0 opacity-20 dark:opacity-10" />
 
       {/* ── Large blurred orbs ── */}
       <div
         aria-hidden
         className="pointer-events-none absolute -top-40 -left-40 h-[600px] w-[600px] rounded-full"
-        style={{ background: "radial-gradient(circle, hsl(161 84% 39% / 0.12) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, hsl(var(--accent) / 0.12) 0%, transparent 70%)" }}
       />
       <div
         aria-hidden
         className="pointer-events-none absolute -bottom-40 -right-20 h-[500px] w-[500px] rounded-full"
-        style={{ background: "radial-gradient(circle, hsl(263 70% 60% / 0.10) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, hsl(48 94% 61% / 0.09) 0%, transparent 70%)" }}
       />
       <div
         aria-hidden
@@ -85,7 +52,7 @@ export function HeroSection() {
                   style={{ animation: "pulse-glow 2s ease-in-out infinite" }}
                 />
                 <Sparkles className="h-3 w-3" />
-                Available for opportunities
+                Open to thoughtful collaborations
               </span>
             </motion.div>
 
@@ -107,9 +74,8 @@ export function HeroSection() {
 
             {/* Typewriter */}
             <motion.div variants={fadeUp} className="mb-6 flex items-center gap-2 font-mono text-lg text-muted-foreground sm:text-xl">
-              <span className="text-accent text-xl">//</span>
-              <span className="text-foreground font-medium">{role}</span>
-              <span className="cursor-blink" />
+              <span className="text-accent text-xl">↳</span>
+              <span className="text-foreground font-medium">{personalInfo.headline}</span>
             </motion.div>
 
             {/* Bio */}
@@ -124,7 +90,7 @@ export function HeroSection() {
                 className="group relative inline-flex h-12 items-center gap-2 overflow-hidden rounded-xl bg-accent px-7 text-sm font-bold text-accent-foreground shadow-glow transition-all duration-300 hover:shadow-[0_4px_32px_hsl(161_84%_39%_/_0.5)] hover:scale-105"
               >
                 <span className="relative z-10 flex items-center gap-2">
-                  View Projects
+                  See selected work
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
                 {/* shine sweep */}
@@ -138,7 +104,7 @@ export function HeroSection() {
                 className="group inline-flex h-12 items-center gap-2 rounded-xl border border-border bg-card/60 px-7 text-sm font-bold text-foreground backdrop-blur-sm transition-all duration-300 hover:border-accent/50 hover:bg-accent/5 hover:scale-105"
               >
                 <Download className="h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
-                Resume
+                Download résumé
               </Link>
             </motion.div>
 
@@ -156,11 +122,11 @@ export function HeroSection() {
                   <Icon className="h-4 w-4" />
                 </Link>
               ))}
-              <span className="ml-2 font-mono text-xs text-muted-foreground/60">· let&apos;s connect</span>
+              <span className="ml-2 font-mono text-xs text-muted-foreground/60">· currently in Kampala / UTC+3</span>
             </motion.div>
           </motion.div>
 
-          {/* ── Right: floating stats card ── */}
+          {/* ── Right: proof strip ── */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -173,7 +139,6 @@ export function HeroSection() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.7 + i * 0.1, duration: 0.5, ease: "easeOut" }}
-                style={{ animation: `float ${3 + i * 0.5}s ease-in-out infinite` }}
                 className="gradient-border bento-card flex flex-col gap-1 py-5 text-center"
               >
                 <span className="text-3xl font-black gradient-text">{h.value}</span>
@@ -181,26 +146,17 @@ export function HeroSection() {
               </motion.div>
             ))}
 
-            {/* Code snippet card */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.0, duration: 0.5 }}
               className="gradient-border bento-card py-4"
-              style={{ animation: "float 4s ease-in-out infinite 1.5s" }}
+              aria-label="Engineering approach"
             >
-              <p className="font-mono text-[10px] text-muted-foreground leading-relaxed">
-                <span className="text-violet-400">const</span>{" "}
-                <span className="text-emerald-400">dev</span>{" "}
-                <span className="text-foreground/40">=</span>{" "}
-                <span className="text-blue-400">{`{`}</span>
-                <br />
-                <span className="pl-3 text-orange-300">passion</span>
-                <span className="text-foreground/40">:</span>{" "}
-                <span className="text-emerald-300">&quot;∞&quot;</span>
-                <br />
-                <span className="text-blue-400">{`}`}</span>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                Building reliable systems
               </p>
+              <p className="mt-2 text-sm font-bold text-foreground">From first commit to shipped product.</p>
             </motion.div>
           </motion.div>
         </div>
@@ -222,19 +178,9 @@ export function HeroSection() {
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.3, duration: 0.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-[10px] font-mono tracking-widest uppercase text-muted-foreground/50"
-      >
-        scroll
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          className="h-6 w-px bg-gradient-to-b from-accent/60 to-transparent"
-        />
-      </motion.div>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground/50">
+        scroll to explore
+      </div>
     </section>
   );
 }
