@@ -1,90 +1,102 @@
 "use client";
 
-import * as React from "react";
-import { motion } from "motion/react";
-import { Calendar, MapPin, ChevronDown } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { experienceData } from "@/data/experience";
 import { fadeUp } from "@/lib/animations";
 import { cn } from "@/lib/utils";
+import { MapPin, Calendar, ChevronDown, Briefcase } from "lucide-react";
 
 export function ExperienceSection() {
-  const [expanded, setExpanded] = React.useState<string | null>(experienceData[0]?.id ?? null);
+  const [expanded, setExpanded] = useState<string | null>(experienceData[0]?.id ?? null);
 
   return (
-    <section id="experience" className="py-24 bg-secondary/30">
-      <div className="container max-w-4xl">
+    <section id="experience" className="relative py-28 overflow-hidden">
+      {/* Decorative BG number */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 select-none text-[20vw] font-black leading-none text-foreground/[0.025]"
+      >
+        02
+      </div>
+
+      <div className="container max-w-6xl relative z-10">
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
-          className="mb-12"
+          className="mb-14"
         >
-          <p className="font-mono text-sm text-accent mb-2">// experience</p>
-          <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Where I&apos;ve worked
+          <p className="font-mono text-sm text-accent mb-3 tracking-wider uppercase">02 / experience</p>
+          <h2 className="text-4xl font-black tracking-tight sm:text-5xl">
+            Where I&apos;ve <span className="gradient-text">worked</span>
           </h2>
+          <p className="mt-4 max-w-xl text-base text-muted-foreground leading-relaxed">
+            My professional journey building production software across startups and digital agencies.
+          </p>
         </motion.div>
 
         <div className="relative">
-          {/* Animated vertical line */}
-          <motion.div
-            initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
-            style={{ originY: 0 }}
-            className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-accent via-border to-transparent sm:left-[1.125rem]"
-          />
+          {/* Vertical timeline line */}
+          <div className="absolute left-5 top-0 bottom-0 w-px bg-gradient-to-b from-accent/60 via-border to-transparent hidden sm:block" />
 
-          <div className="space-y-4 pl-10 sm:pl-12">
+          <div className="flex flex-col gap-6">
             {experienceData.map((exp, i) => {
               const isOpen = expanded === exp.id;
               return (
                 <motion.div
                   key={exp.id}
-                  custom={i + 1}
+                  custom={i}
                   variants={fadeUp}
                   initial="hidden"
                   whileInView="visible"
-                  viewport={{ once: true, margin: "-40px" }}
-                  className="relative"
+                  viewport={{ once: true, margin: "-60px" }}
+                  className="sm:pl-14 relative"
                 >
                   {/* Timeline dot */}
                   <div
                     className={cn(
-                      "absolute -left-[2.125rem] top-5 h-4 w-4 rounded-full border-2 transition-colors duration-300 sm:-left-[2.375rem]",
-                      exp.current ? "border-accent bg-accent/20" : "border-border bg-background"
+                      "absolute left-3.5 top-6 h-3 w-3 -translate-x-1/2 rounded-full border-2 transition-all duration-300 hidden sm:block",
+                      isOpen
+                        ? "border-accent bg-accent scale-125"
+                        : "border-border bg-background"
                     )}
                   />
                   {exp.current && (
-                    <div className="absolute -left-[2.125rem] top-5 h-4 w-4 rounded-full bg-accent/30 animate-ping sm:-left-[2.375rem]" />
+                    <div className="absolute left-3.5 top-6 h-5 w-5 -translate-x-1/2 rounded-full bg-accent/25 animate-ping hidden sm:block" />
                   )}
 
+                  {/* Card */}
                   <div
                     className={cn(
-                      "bento-card cursor-pointer transition-all duration-200",
-                      isOpen && "border-accent/30"
+                      "gradient-border bento-card cursor-pointer transition-all duration-300",
+                      isOpen && "border-accent/40 shadow-glow-sm"
                     )}
                     onClick={() => setExpanded(isOpen ? null : exp.id)}
+                    role="button"
+                    aria-expanded={isOpen}
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === "Enter" && setExpanded(isOpen ? null : exp.id)}
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2 mb-1">
-                          <h3 className="font-bold text-foreground">{exp.role}</h3>
+                          <Briefcase className="h-4 w-4 text-accent flex-shrink-0" />
+                          <h3 className="font-black text-foreground text-lg leading-snug">{exp.role}</h3>
                           {exp.current && (
-                            <span className="rounded-full bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">
+                            <span className="rounded-full bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 text-[10px] font-bold text-emerald-400">
                               Current
                             </span>
                           )}
                         </div>
-                        <p className="text-sm font-medium text-accent">{exp.company}</p>
-                        <div className="mt-1.5 flex flex-wrap gap-3 text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1">
+                        <p className="text-base font-bold text-accent mb-2">{exp.company}</p>
+                        <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
+                          <span className="flex items-center gap-1.5">
                             <Calendar className="h-3 w-3" />
                             {exp.startDate} — {exp.endDate}
                           </span>
-                          <span className="flex items-center gap-1">
+                          <span className="flex items-center gap-1.5">
                             <MapPin className="h-3 w-3" />
                             {exp.location}
                           </span>
@@ -99,30 +111,39 @@ export function ExperienceSection() {
                       </motion.div>
                     </div>
 
-                    <motion.div
-                      initial={false}
-                      animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pt-4 mt-4 border-t border-border space-y-4">
-                        <ul className="space-y-2">
-                          {exp.description.map((point, pi) => (
-                            <li key={pi} className="flex gap-3 text-sm text-muted-foreground">
-                              <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" />
-                              <span className="leading-relaxed">{point}</span>
-                            </li>
-                          ))}
-                        </ul>
-                        <div className="flex flex-wrap gap-1.5">
-                          {exp.technologies.map((tech) => (
-                            <span key={tech} className="rounded-md border border-border bg-secondary px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          key="content"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pt-5 mt-5 border-t border-border/60">
+                            <ul className="space-y-3 mb-5">
+                              {exp.description.map((point, pi) => (
+                                <li key={pi} className="flex gap-3 text-sm text-muted-foreground">
+                                  <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" />
+                                  <span className="leading-relaxed">{point}</span>
+                                </li>
+                              ))}
+                            </ul>
+                            <div className="flex flex-wrap gap-1.5">
+                              {exp.technologies.map((tech) => (
+                                <span
+                                  key={tech}
+                                  className="rounded-lg border border-border bg-secondary/60 px-2.5 py-1 text-[10px] font-bold text-muted-foreground"
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </motion.div>
               );

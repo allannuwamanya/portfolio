@@ -103,6 +103,7 @@
   }
 
   .shadow-glow { box-shadow: 0 12px 35px -14px hsl(var(--accent) / 0.7); }
+  .shadow-glow-sm { box-shadow: 0 6px 20px -10px hsl(var(--accent) / 0.5); }
 
   .dot-grid {
     background-image: radial-gradient(hsl(var(--foreground) / 0.09) 1px, transparent 1px);
@@ -138,6 +139,19 @@
     margin-left: 2px;
     vertical-align: middle;
     animation: blink 1s step-start infinite;
+  }
+
+  /* Section dividers */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
+  }
+
+  /* content-visibility optimization for off-screen heavy sections */
+  .offscreen-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 600px;
   }
 }
 

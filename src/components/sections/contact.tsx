@@ -71,18 +71,26 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-24 bg-secondary/30">
-      <div className="container max-w-6xl">
+    <section id="contact" className="relative py-28 overflow-hidden bg-secondary/20">
+      {/* Decorative BG number */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 select-none text-[20vw] font-black leading-none text-foreground/[0.025]"
+      >
+        07
+      </div>
+
+      <div className="container max-w-6xl relative z-10">
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
-          className="mb-12"
+          className="mb-14"
         >
-          <p className="font-mono text-sm text-accent mb-2">// contact</p>
-          <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Let&apos;s work together
+          <p className="font-mono text-sm text-accent mb-3 tracking-wider uppercase">07 / contact</p>
+          <h2 className="text-4xl font-black tracking-tight sm:text-5xl">
+            Let&apos;s <span className="gradient-text">work together</span>
           </h2>
         </motion.div>
 

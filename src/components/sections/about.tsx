@@ -22,11 +22,19 @@ export function AboutSection() {
       {/* Section fade top */}
       <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent pointer-events-none" />
 
+      {/* Decorative BG number */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 select-none text-[20vw] font-black leading-none text-foreground/[0.025]"
+      >
+        04
+      </div>
+
       <div className="container max-w-6xl relative z-10">
         <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} className="mb-14">
-          <p className="font-mono text-sm text-accent mb-3 tracking-wider uppercase">// about me</p>
+          <p className="font-mono text-sm text-accent mb-3 tracking-wider uppercase">04 / about me</p>
           <h2 className="text-4xl font-black tracking-tight sm:text-5xl">
-            Who I am &amp; what I do
+            Who I am &amp; <span className="gradient-text">what I do</span>
           </h2>
         </motion.div>
 
