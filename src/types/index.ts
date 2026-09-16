@@ -21,7 +21,29 @@ export interface NavItem {
   external?: boolean;
 }
 
-export type ProjectCategory = "Full Stack" | "Frontend" | "Mobile" | "Backend / API" | "Open Source" | "AI / ML";
+export type ProjectCategory =
+  | "All"
+  | "AI & Speech"
+  | "Systems & Backend"
+  | "Fintech & Web3"
+  | "Open Data"
+  | "Web Apps";
+
+export interface CaseStudySection {
+  title: string;
+  subtitle?: string;
+  content: string;
+  bullets?: string[];
+  codeOrArch?: string;
+}
+
+export interface CaseStudyDetails {
+  challenge: string;
+  approach: string;
+  architectureDiagram?: string;
+  decisions: { title: string; explanation: string }[];
+  impact: string[];
+}
 
 export interface Project {
   id: string;
@@ -29,16 +51,18 @@ export interface Project {
   title: string;
   tagline: string;
   description: string;
-  category: ProjectCategory;
+  category: "AI & Speech" | "Systems & Backend" | "Fintech & Web3" | "Open Data" | "Web Apps";
   featured: boolean;
   tags: string[];
-  image: string;
+  image?: string;
   demoUrl?: string;
   repoUrl?: string;
+  stars?: number;
   metrics?: {
     label: string;
     value: string;
   }[];
+  caseStudy?: CaseStudyDetails;
   startDate?: string;
   endDate?: string;
 }

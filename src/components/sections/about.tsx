@@ -14,7 +14,7 @@ const facts = [
   { icon: Star, text: "Open source contributor", color: "text-violet-400", bg: "bg-violet-400/10 border-violet-400/20" },
 ];
 
-const techLogos = ["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "Docker"];
+const techLogos = ["Python / PyTorch", "TypeScript", "Next.js 15", "NestJS", "Temporal.io", "PostgreSQL", "TRON Web3", "Docker"];
 
 export function AboutSection() {
   return (
@@ -98,7 +98,7 @@ export function AboutSection() {
             <Briefcase className="h-5 w-5 text-violet-400" />
             <p className="font-bold text-foreground text-sm">Currently Building</p>
             <div className="flex flex-wrap gap-1 mt-auto">
-              {["React", "Node.js", "TypeScript"].map((t) => (
+              {["LingualDub Speech-AI", "Temporal Workflows", "Open Data"].map((t) => (
                 <span key={t} className="rounded-lg bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 text-[10px] font-bold text-violet-400">
                   {t}
                 </span>

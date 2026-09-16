@@ -9,11 +9,11 @@ import { siteConfig } from "@/lib/constants";
 import { fadeUp, letterReveal, staggerContainer } from "@/lib/animations";
 
 const ROLES = [
-  "Full-Stack Engineer",
-  "TypeScript Developer",
-  "Next.js Specialist",
-  "API Architect",
-  "Open Source Builder",
+  "Speech-AI & NLP Engineer",
+  "Distributed Systems Architect",
+  "Full-Stack TypeScript & Python",
+  "Temporal.io Workflow Builder",
+  "Open Data & Civic Tech Builder",
 ];
 
 const socialLinks = [
