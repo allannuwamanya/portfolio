@@ -66,7 +66,7 @@ export function AboutSection() {
                 <MapPin className="h-3.5 w-3.5 text-accent" />
                 {personalInfo.location}
               </div>
-              <Link href="#contact" className="group flex items-center gap-1 text-xs font-bold text-accent hover:underline">
+              <Link href="/contact" className="group flex items-center gap-1 text-xs font-bold text-accent hover:underline">
                 Hire me <ArrowUpRight className="h-3 w-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </Link>
             </div>

@@ -18,10 +18,10 @@ export const siteConfig: SiteConfig = {
 };
 
 export const mainNav: NavItem[] = [
-  { title: "About", href: "/#about" },
-  { title: "Experience", href: "/#experience" },
+  { title: "About", href: "/about" },
+  { title: "Experience", href: "/experience" },
   { title: "Projects", href: "/projects" },
-  { title: "Skills", href: "/#skills" },
+  { title: "Skills", href: "/skills" },
   { title: "Writing", href: "/blog" },
-  { title: "Contact", href: "/#contact" },
+  { title: "Contact", href: "/contact" },
 ];

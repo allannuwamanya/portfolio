@@ -195,7 +195,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <ArrowLeft className="h-4 w-4" /> All projects
           </Link>
           <Link
-            href="/#contact"
+            href="/contact"
             className="group inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-accent-foreground shadow-glow transition-all hover:scale-105"
           >
             Work together <ArrowUpRight className="h-4 w-4" />

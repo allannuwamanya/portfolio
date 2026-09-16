@@ -2,26 +2,17 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Menu, X, Download, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { cn } from "@/lib/utils";
 import { mainNav, siteConfig } from "@/lib/constants";
 
-/** Scrolls to a section by id without touching the URL bar */
-function scrollToSection(id: string) {
-  const el = document.getElementById(id);
-  if (el) {
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-}
-
 export function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
   const pathname = usePathname();
-  const router = useRouter();
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 20));
@@ -32,36 +23,9 @@ export function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
 
-  /**
-   * For /#section links:
-   *   - If already on "/", scroll silently (no hash in URL)
-   *   - If on another page, navigate to "/" then scroll after transition
-   * For normal page links (/projects, /blog): let Next.js handle it naturally.
-   */
-  const handleClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
-  ) => {
-    if (!href.startsWith("/#")) return; // not a section link — do nothing
-
-    e.preventDefault();
-    setIsOpen(false);
-
-    const sectionId = href.slice(2); // "/#about" → "about"
-
-    if (pathname === "/") {
-      // Already on home — just scroll, never touch the URL
-      scrollToSection(sectionId);
-    } else {
-      // Navigate home first, then scroll after the page transition finishes
-      router.push("/");
-      setTimeout(() => scrollToSection(sectionId), 500);
-    }
-  };
-
   const isActive = (href: string) => {
-    if (href.startsWith("/#")) return pathname === "/";
-    return pathname === href;
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
   };
 
   return (
@@ -90,12 +54,11 @@ export function Navbar() {
           {/* Desktop nav */}
           <nav className="hidden items-center gap-0.5 md:flex">
             {mainNav.map((item) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
-                onClick={(e) => handleClick(e, item.href)}
                 className={cn(
-                  "relative rounded-lg px-3.5 py-2 text-sm font-medium transition-colors duration-200 cursor-pointer",
+                  "relative rounded-lg px-3.5 py-2 text-sm font-medium transition-colors duration-200",
                   isActive(item.href)
                     ? "text-foreground"
                     : "text-muted-foreground hover:text-foreground"
@@ -109,7 +72,7 @@ export function Navbar() {
                   />
                 )}
                 <span className="relative z-10">{item.title}</span>
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -184,18 +147,18 @@ export function Navbar() {
               <nav className="flex flex-col gap-1">
                 {mainNav.map((item, i) => (
                   <motion.div key={item.href} initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05, duration: 0.3 }}>
-                    <a
+                    <Link
                       href={item.href}
-                      onClick={(e) => handleClick(e, item.href)}
+                      onClick={() => setIsOpen(false)}
                       className={cn(
-                        "block rounded-xl px-4 py-3 text-base font-semibold transition-colors cursor-pointer",
+                        "block rounded-xl px-4 py-3 text-base font-semibold transition-colors",
                         isActive(item.href)
                           ? "bg-accent/10 text-accent"
                           : "text-muted-foreground hover:bg-secondary hover:text-foreground"
                       )}
                     >
                       {item.title}
-                    </a>
+                    </Link>
                   </motion.div>
                 ))}
               </nav>

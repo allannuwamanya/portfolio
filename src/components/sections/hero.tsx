@@ -178,7 +178,7 @@ export function HeroSection() {
             {/* CTAs */}
             <motion.div variants={fadeUp} className="mb-10 flex flex-wrap gap-3">
               <Link
-                href="#projects"
+                href="/projects"
                 className="group relative inline-flex h-12 items-center gap-2 overflow-hidden rounded-xl bg-accent px-7 text-sm font-bold text-accent-foreground shadow-glow transition-all duration-300 hover:scale-105 hover:shadow-[0_4px_32px_hsl(161_84%_39%_/_0.5)]"
               >
                 <span className="relative z-10 flex items-center gap-2">
