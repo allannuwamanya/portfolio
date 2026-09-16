@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { siteConfig } from "@/lib/constants";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { PageTransition } from "@/components/providers/page-transition";
+import NextTopLoader from "nextjs-toploader";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import "./globals.css";
@@ -43,6 +44,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className={`${geist.variable} ${geistMono.variable} min-h-screen`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+            <NextTopLoader
+              color="hsl(155, 62%, 45%)"
+              initialPosition={0.08}
+              crawlSpeed={200}
+              height={3}
+              crawl={true}
+              showSpinner={false}
+              easing="ease"
+              speed={200}
+              shadow="0 0 10px hsl(155, 62%, 45%), 0 0 5px hsl(155, 62%, 45%)"
+            />
           <Navbar />
           <PageTransition>
             <main>{children}</main>
