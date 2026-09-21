@@ -7,7 +7,7 @@ export const siteConfig: SiteConfig = {
   description:
     "Full-stack software engineer crafting high-performance modern web applications, scalable distributed backends, and responsive user experiences.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://allannuwamanya.dev",
-  ogImage: "/images/og.png",
+  ogImage: "/images/allan.jpg",
   links: {
     github: "https://github.com/allannuwamanya",
     linkedin: "https://linkedin.com/in/allan-nuwamanya",

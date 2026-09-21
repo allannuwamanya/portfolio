@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { MapPin, Briefcase, Coffee, Zap, Globe, Star, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { personalInfo } from "@/data/personal";
 import { fadeUp } from "@/lib/animations";
 import { cn } from "@/lib/utils";
@@ -48,9 +49,15 @@ export function AboutSection() {
             <div>
               {/* Avatar */}
               <div className="mb-5 flex items-center gap-4">
-                <div className="relative h-16 w-16 rounded-2xl overflow-hidden flex-shrink-0 border border-accent/30"
-                  style={{ background: "linear-gradient(135deg, hsl(161 84% 39% / 0.3) 0%, hsl(263 70% 60% / 0.3) 100%)" }}>
-                  <div className="absolute inset-0 flex items-center justify-center text-2xl font-black text-accent">AN</div>
+                <div className="relative h-16 w-16 rounded-2xl overflow-hidden flex-shrink-0 border border-accent/30 bg-card">
+                  <Image
+                    src="/images/allan.jpg"
+                    alt={personalInfo.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 64px, 64px"
+                    priority
+                  />
                 </div>
                 <div>
                   <h3 className="font-black text-foreground text-lg">{personalInfo.name}</h3>
