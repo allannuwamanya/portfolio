@@ -7,6 +7,7 @@ import Image from "next/image";
 import { personalInfo } from "@/data/personal";
 import { fadeUp } from "@/lib/animations";
 import { cn } from "@/lib/utils";
+import allanImg from "../../../public/images/allan.jpg";
 
 const facts = [
   { icon: Coffee, text: "Fueled by coffee & curiosity", color: "text-amber-400", bg: "bg-amber-400/10 border-amber-400/20" },
@@ -51,7 +52,7 @@ export function AboutSection() {
               <div className="mb-5 flex items-center gap-4">
                 <div className="relative h-16 w-16 rounded-2xl overflow-hidden flex-shrink-0 border border-accent/30 bg-card">
                   <Image
-                    src="/images/allan.jpg"
+                    src={allanImg}
                     alt={personalInfo.name}
                     fill
                     className="object-cover"
