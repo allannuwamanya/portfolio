@@ -83,9 +83,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
           {/* Action links */}
           <div className="mt-10 flex flex-wrap gap-4">
-            {project.links?.live && (
+            {project.demoUrl && (
               <a
-                href={project.links.live}
+                href={project.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg bg-foreground px-6 py-3 text-sm font-bold text-background transition-transform hover:scale-105"
@@ -93,9 +93,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 Visit Live Site <ExternalLink className="h-4 w-4" />
               </a>
             )}
-            {project.links?.github && (
+            {project.repoUrl && (
               <a
-                href={project.links.github}
+                href={project.repoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-6 py-3 text-sm font-bold text-foreground transition-all hover:bg-secondary"

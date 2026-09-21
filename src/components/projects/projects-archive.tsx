@@ -164,13 +164,13 @@ export function ProjectsArchive({ initialProjects }: { initialProjects: Project[
                     >
                       Case Study <ArrowUpRight className="h-3 w-3" />
                     </Link>
-                    {project.links.github && (
-                      <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                    {project.repoUrl && (
+                      <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                         <Github className="h-4 w-4" />
                       </a>
                     )}
-                    {project.links.live && (
-                      <a href={project.links.live} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                    {project.demoUrl && (
+                      <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                         <ExternalLink className="h-4 w-4" />
                       </a>
                     )}
