@@ -18,8 +18,16 @@ const contactSchema = z.object({
 type ContactForm = z.infer<typeof contactSchema>;
 type FieldErrors = Partial<Record<keyof ContactForm, string>>;
 
-// Replace with your Formspree form ID: https://formspree.io/
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+// Optional: set NEXT_PUBLIC_FORMSPREE_ENDPOINT to enable live submissions.
+// When unset, the form degrades to a prefilled mailto: link instead of failing silently.
+const FORMSPREE_ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+
+/** Builds a mailto: link carrying the visitor's message so nothing is lost without a backend. */
+function buildMailtoLink(form: ContactForm) {
+  const subject = form.subject ? `Portfolio enquiry: ${form.subject}` : "Portfolio enquiry";
+  const body = `${form.message}\n\n— ${form.name || "A visitor"} (${form.email || "no email given"})`;
+  return `mailto:${siteConfig.links.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 
 const socialLinks = [
   { href: siteConfig.links.github, icon: Github, label: "GitHub", handle: "@allannuwamanya" },
@@ -54,6 +62,10 @@ export function ContactSection() {
     }
     setStatus("loading");
     try {
+      if (!FORMSPREE_ENDPOINT) {
+        window.location.href = buildMailtoLink(form);
+        return;
+      }
       const res = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -203,8 +215,18 @@ export function ContactSection() {
                   className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-accent px-6 text-sm font-semibold text-accent-foreground transition-all hover:bg-accent/90 hover:shadow-glow disabled:opacity-60"
                 >
                   {status === "loading" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-                  {status === "loading" ? "Sending..." : "Send message"}
+                  {status === "loading"
+                    ? "Sending..."
+                    : FORMSPREE_ENDPOINT
+                      ? "Send message"
+                      : "Open in mail app"}
                 </button>
+                {!FORMSPREE_ENDPOINT && (
+                  <p className="text-xs text-muted-foreground">
+                    Online form is not configured yet — this opens your email app with the message
+                    prefilled.
+                  </p>
+                )}
               </form>
             )}
           </motion.div>

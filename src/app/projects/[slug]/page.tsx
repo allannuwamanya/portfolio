@@ -111,16 +111,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         {/* Core Specs */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-20">
           <div className="flex flex-col gap-1 border-l-2 border-border pl-4">
-            <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Year</span>
-            <span className="font-mono font-medium text-foreground">{caseStudy?.year || "2024"}</span>
+            <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Category</span>
+            <span className="font-medium text-foreground">{project.category}</span>
           </div>
           <div className="flex flex-col gap-1 border-l-2 border-border pl-4">
-            <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Role</span>
-            <span className="font-medium text-foreground">{caseStudy?.role || "Lead Engineer"}</span>
+            <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Links</span>
+            <span className="font-medium text-foreground">
+              {[project.demoUrl && "Live", project.repoUrl && "Source"].filter(Boolean).join(" + ") || "Private"}
+            </span>
           </div>
           <div className="flex flex-col gap-1 border-l-2 border-border pl-4">
             <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Stack</span>
-            <span className="font-medium text-foreground">{project.tags.slice(0,2).join(", ")}</span>
+            <span className="font-medium text-foreground">{project.tags.slice(0, 2).join(", ")}</span>
           </div>
           {project.metrics && project.metrics.length > 0 && (
             <div className="flex flex-col gap-1 border-l-2 border-accent pl-4">
@@ -141,9 +143,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 The Challenge
               </h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
-                {caseStudy?.problem.map((para, i) => (
-                  <p key={i}>{para}</p>
-                )) || <p>No challenge documentation provided.</p>}
+                <p>{caseStudy?.challenge ?? "No challenge documentation provided."}</p>
               </div>
             </section>
 
@@ -154,9 +154,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 Architecture &amp; Solution
               </h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed mb-8">
-                {caseStudy?.solution.map((para, i) => (
-                  <p key={i}>{para}</p>
-                )) || <p>No architecture documentation provided.</p>}
+                <p>{caseStudy?.approach ?? "No architecture documentation provided."}</p>
               </div>
 
               {/* ASCII Diagram if it exists */}
@@ -173,18 +171,41 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               )}
             </section>
 
-            {/* Key Features */}
-            {caseStudy?.features && (
+            {/* Engineering Decisions */}
+            {caseStudy?.decisions && caseStudy.decisions.length > 0 && (
               <section>
                 <h2 className="mb-6 flex items-center gap-2 text-2xl font-black text-foreground">
                   <span className="h-6 w-1.5 rounded-full bg-accent" />
-                  Key Implementations
+                  Engineering Decisions
                 </h2>
                 <ul className="grid gap-4 sm:grid-cols-2">
-                  {caseStudy.features.map((feature, i) => (
-                    <li key={i} className="flex gap-3 rounded-xl border border-border bg-card p-5">
+                  {caseStudy.decisions.map((decision) => (
+                    <li key={decision.title} className="flex gap-3 rounded-xl border border-border bg-card p-5">
                       <CheckCircle2 className="h-5 w-5 shrink-0 text-foreground" />
-                      <span className="text-sm font-medium text-muted-foreground">{feature}</span>
+                      <div className="flex flex-col gap-1.5">
+                        <span className="text-sm font-bold text-foreground">{decision.title}</span>
+                        <span className="text-sm font-medium leading-relaxed text-muted-foreground">
+                          {decision.explanation}
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Impact */}
+            {caseStudy?.impact && caseStudy.impact.length > 0 && (
+              <section>
+                <h2 className="mb-6 flex items-center gap-2 text-2xl font-black text-foreground">
+                  <span className="h-6 w-1.5 rounded-full bg-accent" />
+                  Outcomes
+                </h2>
+                <ul className="space-y-3">
+                  {caseStudy.impact.map((outcome) => (
+                    <li key={outcome} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
+                      <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                      <span>{outcome}</span>
                     </li>
                   ))}
                 </ul>
