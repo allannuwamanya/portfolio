@@ -159,7 +159,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
               {/* ASCII Diagram if it exists */}
               {caseStudy?.architectureDiagram && (
-                <div className="my-8 rounded-xl border border-border bg-[#0d0d0d] p-6 overflow-x-auto">
+                <div className="my-8 rounded-xl border border-border bg-card p-6 overflow-x-auto">
                   <div className="mb-4 flex items-center gap-2">
                     <Workflow className="h-4 w-4 text-muted-foreground" />
                     <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest">System Architecture</span>
