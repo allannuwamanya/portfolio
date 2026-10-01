@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
-import { ArrowUpRight, Briefcase, Code2, FileText, Mail, User } from "lucide-react";
+import { ArrowUpRight, Briefcase, CalendarDays, Code2, FileText, Mail, User } from "lucide-react";
 import { fadeUp } from "@/lib/animations";
 import { TechIcon } from "@/components/shared/tech-icon";
 
@@ -28,6 +28,12 @@ const DESTINATIONS = [
     title: "Skills",
     blurb: "The AI, backend, and web stack I reach for day to day.",
     icon: Code2,
+  },
+  {
+    href: "/events",
+    title: "Events",
+    blurb: "Workshops, conferences, and meetups I have taken part in.",
+    icon: CalendarDays,
   },
   {
     href: "/blog",

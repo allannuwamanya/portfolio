@@ -91,6 +91,33 @@ export interface SkillCategory {
   skills: Skill[];
 }
 
+export type CommunityEventKind =
+  | "Workshop"
+  | "Conference"
+  | "Meetup"
+  | "Hackathon"
+  | "Talk"
+  | "Training";
+
+export interface CommunityEvent {
+  id: string;
+  title: string;
+  /** The community, company, or programme that ran it. */
+  host: string;
+  kind: CommunityEventKind;
+  /** "attended" = you joined it, "spoke" = you presented, "mentored" = you helped run it. */
+  role: "attended" | "spoke" | "mentored";
+  /** "YYYY-MM" — month precision is usually all that is knowable afterwards. */
+  date: string;
+  location: string;
+  format?: "In person" | "Virtual" | "Hybrid";
+  summary: string;
+  /** What it changed in your work. This is the part a reader actually cares about. */
+  takeaway?: string;
+  /** Slides, a write-up, or the event page itself. */
+  link?: string;
+}
+
 export interface BlogPostMeta {
   slug: string;
   title: string;
