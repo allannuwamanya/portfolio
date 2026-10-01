@@ -14,8 +14,11 @@ const NEUTRAL = "neutral";
 
 /** Falls back to the neutral glyph so an unknown name never renders blank. */
 export function techIconId(name: string): string {
+  if (name in TECH_ICON_PATHS) return name;
+
   const direct = ALIASES[name];
   if (direct) return direct;
+
   // "TypeScript & Node.js" style labels not present verbatim.
   const partial = Object.keys(ALIASES).find(
     (alias) => alias.length > 3 && name.toLowerCase().includes(alias.toLowerCase()),
@@ -41,17 +44,19 @@ function luminance(hex: string): number {
 const legibleCache = new Map<string, string>();
 
 /**
- * Several of these brands are black-on-light designs (Vercel, Next.js, Express,
- * Temporal, GitHub, Prisma). At their published colour they are literally
- * invisible on a pure-black page, so lift them toward white until they read —
- * keeping the brand hue rather than discarding it for grey.
+ * Below ~0.07 luminance a mark stops clearing a 3:1 contrast ratio against pure
+ * black, which is where the black-on-light brands (Vercel, Next.js, Express,
+ * Temporal, GitHub, Prisma) fall. Lift only those, and keep the brand hue
+ * rather than flattening them to grey.
  */
+const MIN_LUMINANCE = 0.07;
+
 function legible(hex: string): string {
   const cached = legibleCache.get(hex);
   if (cached) return cached;
 
   let result = hex;
-  if (luminance(hex) < 0.18) {
+  if (luminance(hex) < MIN_LUMINANCE) {
     const n = parseInt(hex.slice(1), 16);
     const rgb = [(n >> 16) & 255, (n >> 8) & 255, n & 255];
     for (let mix = 0.2; mix <= 1; mix += 0.2) {
@@ -59,7 +64,7 @@ function legible(hex: string): string {
         .map((c) => Math.round(c + (255 - c) * mix))
         .map((c) => c.toString(16).padStart(2, "0"))
         .join("")}`;
-      if (luminance(result) >= 0.18) break;
+      if (luminance(result) >= MIN_LUMINANCE) break;
     }
   }
 

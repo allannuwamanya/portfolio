@@ -1,21 +1,18 @@
 import { HeroSection } from "@/components/sections/hero";
-import { AboutSection } from "@/components/sections/about";
-import { SkillsSection } from "@/components/sections/skills";
 import { ProjectsSection } from "@/components/sections/projects";
-import { ExperienceSection } from "@/components/sections/experience";
-import { BlogPreviewSection } from "@/components/sections/blog-preview";
-import { ContactSection } from "@/components/sections/contact";
+import { ExploreSection } from "@/components/sections/explore";
 
+/**
+ * The landing page routes people to a section rather than stacking every section
+ * on one long scroll. About, Experience, Skills, Writing and Contact each own a
+ * page; this page only offers the hero, featured work, and a way in.
+ */
 export default function HomePage() {
   return (
     <>
       <HeroSection />
       <ProjectsSection />
-      <ExperienceSection />
-      <AboutSection />
-      <SkillsSection />
-      <BlogPreviewSection />
-      <ContactSection />
+      <ExploreSection />
     </>
   );
 }

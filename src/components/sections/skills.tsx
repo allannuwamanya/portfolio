@@ -100,24 +100,22 @@ export function SkillsSection() {
             >
               <h3 className="text-sm font-bold text-foreground tracking-wide">{category.title}</h3>
 
-              <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4">
+              <div className="grid grid-cols-4 gap-2.5 sm:grid-cols-6">
                 {category.skills.map((skill) => (
                   <div
                     key={skill.name}
                     title={`${skill.name} — ${skill.level}`}
-                    className="group relative flex flex-col items-center gap-2 rounded-xl border border-border/60 bg-background/40 p-3 text-center transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 hover:bg-accent/5"
+                    className="group relative flex aspect-square items-center justify-center rounded-xl border border-border/60 bg-background/40 transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 hover:bg-accent/5"
                   >
                     <TechIcon
                       name={skill.name}
+                      title={skill.name}
                       className="h-7 w-7 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
                     />
-                    <span className="text-[10px] leading-tight font-medium text-muted-foreground transition-colors group-hover:text-foreground">
-                      {skill.name}
-                    </span>
                     {skill.level && (
                       <span
                         className={cn(
-                          "absolute right-2 top-2 h-1.5 w-1.5 rounded-full",
+                          "absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full",
                           LEVEL_DOT[skill.level] ?? "bg-accent",
                         )}
                       />
