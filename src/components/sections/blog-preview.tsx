@@ -1,39 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "motion/react";
-import { ArrowRight, Clock, CalendarDays, FileText } from "lucide-react";
+import { ArrowRight, Github, FileText } from "lucide-react";
 import { fadeUp } from "@/lib/animations";
-
-const placeholderPosts = [
-  {
-    slug: "building-scalable-apis-nodejs",
-    title: "Building Scalable REST APIs with Node.js and TypeScript",
-    description:
-      "A deep dive into architecture patterns, error handling, and performance optimization for production-grade APIs.",
-    publishedAt: "2025-08-15",
-    readTime: "8 min read",
-    tags: ["Node.js", "TypeScript", "API"],
-  },
-  {
-    slug: "nextjs-15-app-router-patterns",
-    title: "Next.js 15 App Router: Patterns You Should Know",
-    description:
-      "Exploring Server Components, parallel routes, intercepting routes, and streaming to build better Next.js applications.",
-    publishedAt: "2025-07-28",
-    readTime: "6 min read",
-    tags: ["Next.js", "React"],
-  },
-  {
-    slug: "css-modern-techniques-2025",
-    title: "CSS Techniques That Will Make Your UI Stand Out in 2025",
-    description:
-      "From container queries to anchor positioning and scroll-driven animations — the CSS features shaping modern UIs.",
-    publishedAt: "2025-07-10",
-    readTime: "5 min read",
-    tags: ["CSS", "UI", "Frontend"],
-  },
-];
+import { siteConfig } from "@/lib/constants";
 
 export function BlogPreviewSection() {
   return (
@@ -65,76 +35,36 @@ export function BlogPreviewSection() {
               Deep-dives on engineering patterns, performance, and the craft of building modern web software.
             </p>
           </div>
-          <Link
-            href="/blog"
-            className="group inline-flex items-center gap-1.5 text-sm font-bold text-accent hover:underline"
+          </motion.div>
+
+        <motion.div
+          custom={1}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="gradient-border bento-card flex flex-col items-center gap-4 px-6 py-16 text-center"
+        >
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-accent/20 bg-accent/5">
+            <FileText className="h-5 w-5 text-accent" />
+          </div>
+          <h3 className="text-xl font-black text-foreground">Writing is on the way</h3>
+          <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
+            Long-form notes on speech-AI pipelines, distributed systems, and production
+            engineering are being written up now. In the meantime, the repositories are a
+            good place to start.
+          </p>
+          <a
+            href={siteConfig.links.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-accent hover:underline"
           >
-            Read all articles
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
+            <Github className="h-4 w-4" />
+            Browse the GitHub profile
+            <ArrowRight className="h-4 w-4" />
+          </a>
         </motion.div>
-
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {placeholderPosts.map((post, i) => (
-            <motion.article
-              key={post.slug}
-              custom={i + 1}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-60px" }}
-              whileHover={{ y: -6, transition: { duration: 0.25 } }}
-              className="gradient-border bento-card group flex flex-col gap-4"
-            >
-              {/* Top icon + tags */}
-              <div className="flex items-start justify-between">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-accent/20 bg-accent/5">
-                  <FileText className="h-4 w-4 text-accent" />
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {post.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-accent/20 bg-accent/5 px-2 py-0.5 text-[10px] font-medium text-accent"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <Link href={`/blog/${post.slug}`}>
-                <h3 className="font-black text-foreground leading-snug transition-colors duration-200 group-hover:text-accent line-clamp-2">
-                  {post.title}
-                </h3>
-              </Link>
-
-              <p className="flex-1 text-sm text-muted-foreground leading-relaxed line-clamp-2">
-                {post.description}
-              </p>
-
-              <div className="flex items-center gap-4 border-t border-border/60 pt-3 text-xs text-muted-foreground">
-                <span className="flex items-center gap-1">
-                  <CalendarDays className="h-3 w-3" />
-                  {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </span>
-                <span className="flex items-center gap-1">
-                  <Clock className="h-3 w-3" />
-                  {post.readTime}
-                </span>
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="ml-auto font-bold text-accent hover:underline"
-                >
-                  Read →
-                </Link>
-              </div>
-            </motion.article>
-          ))}
-        </div>
       </div>
     </section>
   );

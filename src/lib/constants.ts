@@ -12,7 +12,7 @@ export const siteConfig: SiteConfig = {
     github: "https://github.com/allannuwamanya",
     linkedin: "https://linkedin.com/in/allan-nuwamanya",
     twitter: "https://x.com/allannuwamanya",
-    email: "allannuwamanya@example.com",
+    email: "hello@allannuwamanya.dev",
     resume: "/resume.pdf",
   },
 };
