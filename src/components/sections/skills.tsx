@@ -1,33 +1,54 @@
 "use client";
 
 import { motion } from "motion/react";
+import { TechIcon, techIconId } from "@/components/shared/tech-icon";
 import { skillCategories } from "@/data/skills";
 import { fadeUp } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 
-const LEVEL_CONFIG: Record<string, { color: string; bar: string; bg: string; border: string; pct: number }> = {
-  Expert: {
-    color: "text-emerald-400",
-    bar: "bg-emerald-400",
-    bg: "bg-emerald-500/10",
-    border: "border-emerald-500/30",
-    pct: 92,
-  },
-  Proficient: {
-    color: "text-blue-400",
-    bar: "bg-blue-400",
-    bg: "bg-blue-500/10",
-    border: "border-blue-500/30",
-    pct: 75,
-  },
-  Familiar: {
-    color: "text-violet-400",
-    bar: "bg-violet-400",
-    bg: "bg-violet-500/10",
-    border: "border-violet-500/30",
-    pct: 55,
-  },
+/**
+ * Proficiency is shown as a dot rather than a percentage: the source data says
+ * "Expert", not "92%", and inventing a number reads as a fake metric.
+ */
+const LEVEL_DOT: Record<string, string> = {
+  Expert: "bg-emerald-400",
+  Proficient: "bg-blue-400",
+  Familiar: "bg-violet-400",
 };
+
+/** Every distinct technology across the categories, in first-seen order. */
+const ALL_SKILLS = skillCategories.flatMap((category) => category.skills);
+
+function IconRibbon() {
+  const half = ALL_SKILLS.length;
+
+  return (
+    <div
+      className="group relative mb-14 overflow-hidden"
+      style={{
+        maskImage: "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
+        WebkitMaskImage: "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
+      }}
+    >
+      <div className="marquee-track">
+        {/* Two identical runs make the -50% translate loop seamlessly. */}
+        {[0, 1].map((copy) => (
+          <div key={copy} className="flex shrink-0 items-center gap-3 pr-3" aria-hidden={copy === 1}>
+            {ALL_SKILLS.map((skill) => (
+              <span
+                key={skill.name}
+                title={skill.name}
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border/60 bg-card/50 transition-transform duration-300 hover:scale-110 hover:border-accent/50"
+              >
+                <TechIcon name={skill.name} className="h-5 w-5" />
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function SkillsSection() {
   return (
@@ -57,29 +78,13 @@ export function SkillsSection() {
           </p>
         </motion.div>
 
-        {/* Legend */}
         <motion.div
-          custom={1}
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
-          className="mb-10 flex flex-wrap items-center gap-4 text-xs"
         >
-          {Object.entries(LEVEL_CONFIG).map(([level, cfg]) => (
-            <span
-              key={level}
-              className={cn(
-                "flex items-center gap-2 rounded-full border px-3 py-1.5 font-medium",
-                cfg.bg,
-                cfg.border,
-                cfg.color
-              )}
-            >
-              <span className={cn("h-1.5 w-1.5 rounded-full", cfg.bar)} />
-              {level} (~{cfg.pct}%)
-            </span>
-          ))}
+          <IconRibbon />
         </motion.div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -95,40 +100,54 @@ export function SkillsSection() {
             >
               <h3 className="text-sm font-bold text-foreground tracking-wide">{category.title}</h3>
 
-              <div className="flex flex-col gap-3.5">
-                {category.skills.map((skill, si) => {
-                  const cfg = skill.level ? LEVEL_CONFIG[skill.level] : null;
-                  const pct = cfg?.pct ?? 60;
-                  return (
-                    <div key={skill.name}>
-                      <div className="mb-1.5 flex items-center justify-between">
-                        <span className="text-xs font-medium text-foreground">{skill.name}</span>
-                        {skill.level && (
-                          <span className={cn("text-[10px] font-bold", cfg?.color)}>
-                            {skill.level}
-                          </span>
+              <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4">
+                {category.skills.map((skill) => (
+                  <div
+                    key={skill.name}
+                    title={`${skill.name} — ${skill.level}`}
+                    className="group relative flex flex-col items-center gap-2 rounded-xl border border-border/60 bg-background/40 p-3 text-center transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 hover:bg-accent/5"
+                  >
+                    <TechIcon
+                      name={skill.name}
+                      className="h-7 w-7 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
+                    />
+                    <span className="text-[10px] leading-tight font-medium text-muted-foreground transition-colors group-hover:text-foreground">
+                      {skill.name}
+                    </span>
+                    {skill.level && (
+                      <span
+                        className={cn(
+                          "absolute right-2 top-2 h-1.5 w-1.5 rounded-full",
+                          LEVEL_DOT[skill.level] ?? "bg-accent",
                         )}
-                      </div>
-                      <div className="h-1 w-full overflow-hidden rounded-full bg-border/50">
-                        <motion.div
-                          className={cn("h-full rounded-full", cfg?.bar ?? "bg-accent")}
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${pct}%` }}
-                          viewport={{ once: true }}
-                          transition={{
-                            duration: 0.9,
-                            ease: [0.22, 1, 0.36, 1],
-                            delay: si * 0.05 + ci * 0.1,
-                          }}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
+                      />
+                    )}
+                  </div>
+                ))}
               </div>
             </motion.div>
           ))}
         </div>
+
+        {/* Legend */}
+        <motion.div
+          custom={6}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          className="mt-8 flex flex-wrap items-center gap-4 text-xs text-muted-foreground"
+        >
+          {Object.entries(LEVEL_DOT).map(([level, dot]) => (
+            <span key={level} className="flex items-center gap-2">
+              <span className={cn("h-1.5 w-1.5 rounded-full", dot)} />
+              {level}
+            </span>
+          ))}
+          <span className="ml-auto font-mono text-muted-foreground/60">
+            {new Set(ALL_SKILLS.map((s) => techIconId(s.name))).size} technologies
+          </span>
+        </motion.div>
       </div>
     </section>
   );

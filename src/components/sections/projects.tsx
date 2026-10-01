@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { ArrowUpRight, ExternalLink, ArrowRight, Star } from "lucide-react";
 import { GithubIcon } from "@/components/shared/brand-icons";
+import { TechTag } from "@/components/shared/tech-tag";
 import { projectsData } from "@/data/projects";
 import { siteConfig } from "@/lib/constants";
 
@@ -121,12 +122,7 @@ function ProjectCard({ project, index }: { project: (typeof projectsData)[number
       <div className="mt-6 border-t border-border/40 pt-4">
         <div className="flex flex-wrap gap-1 mb-4">
           {project.tags.slice(0, 3).map((tag) => (
-            <span
-              key={tag}
-              className="rounded-lg border border-border/50 bg-secondary/50 px-2 py-0.5 text-[10px] font-bold text-muted-foreground"
-            >
-              {tag}
-            </span>
+            <TechTag key={tag} name={tag} className="py-0.5" />
           ))}
           {project.tags.length > 3 && (
             <span className="text-[10px] font-bold text-muted-foreground/50 self-center">
