@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowUpRight, ExternalLink, Star, Search, Code2 } from "lucide-react";
 import { GithubIcon } from "@/components/shared/brand-icons";
+import { TechTag } from "@/components/shared/tech-tag";
 import { Project, ProjectCategory } from "@/types";
 import { cn } from "@/lib/utils";
 
@@ -152,9 +153,7 @@ export function ProjectsArchive({ initialProjects }: { initialProjects: Project[
                 <div className="mt-6 pt-6 border-t border-border flex flex-col gap-4">
                   <div className="flex flex-wrap gap-2">
                     {project.tags.slice(0, 4).map((tag) => (
-                      <span key={tag} className="rounded bg-secondary px-2 py-1 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                        {tag}
-                      </span>
+                      <TechTag key={tag} name={tag} className="border-transparent bg-secondary" uppercase />
                     ))}
                   </div>
 

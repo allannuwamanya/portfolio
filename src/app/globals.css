@@ -3,30 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+  /* Dark is the only theme. Tokens live on :root so there is no dependency on a
+     .dark class being present — the site renders identically with JS disabled. */
   :root {
-    --background: 39 33% 96%;
-    --foreground: 24 18% 12%;
-    --card: 39 33% 99%;
-    --card-foreground: 24 18% 12%;
-    --popover: 39 33% 99%;
-    --popover-foreground: 24 18% 12%;
-    --primary: 24 18% 12%;
-    --primary-foreground: 39 33% 96%;
-    --secondary: 36 22% 90%;
-    --secondary-foreground: 24 18% 18%;
-    --muted: 36 16% 88%;
-    --muted-foreground: 25 9% 43%;
-    --accent: 155 68% 32%;
-    --accent-foreground: 39 33% 98%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 32 16% 81%;
-    --input: 32 16% 81%;
-    --ring: 155 68% 32%;
-    --radius: 0.35rem;
-  }
+    color-scheme: dark;
 
-  .dark {
     --background: 0 0% 0%;
     --foreground: 39 33% 94%;
     --card: 0 0% 6%;
@@ -46,6 +27,7 @@
     --border: 0 0% 16%;
     --input: 0 0% 16%;
     --ring: 155 62% 45%;
+    --radius: 0.35rem;
   }
 
   * { box-sizing: border-box; @apply border-border; }
@@ -146,6 +128,23 @@
     width: 100%;
     height: 1px;
     background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
+  }
+
+  /* Scrolling stack ribbon. The child track holds two identical runs, so a -50%
+     translate lands exactly on the seam and loops without a visible jump. */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 55s linear infinite;
+  }
+
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
   }
 
   /* content-visibility optimization for off-screen heavy sections */

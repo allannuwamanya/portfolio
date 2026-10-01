@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { notFound } from "next/navigation";
 import { GithubIcon } from "@/components/shared/brand-icons";
+import { TechTag } from "@/components/shared/tech-tag";
 import { projectsData } from "@/data/projects";
 import React from "react";
 
@@ -222,12 +223,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </h3>
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-md border border-border bg-secondary px-3 py-1.5 text-xs font-bold text-muted-foreground"
-                  >
-                    {tag}
-                  </span>
+                  <TechTag key={tag} name={tag} className="px-3 py-1.5 text-xs" />
                 ))}
               </div>
             </div>

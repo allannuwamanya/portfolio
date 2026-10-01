@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, Download, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
-import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { cn } from "@/lib/utils";
 import { mainNav, siteConfig } from "@/lib/constants";
 
@@ -78,7 +77,6 @@ export function Navbar() {
 
           {/* Desktop actions */}
           <div className="hidden items-center gap-2 md:flex">
-            <ThemeToggle />
             <Link
               href={siteConfig.links.resume ?? "#"}
               target="_blank"
@@ -93,7 +91,6 @@ export function Navbar() {
 
           {/* Mobile controls */}
           <div className="flex items-center gap-2 md:hidden">
-            <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
               aria-expanded={isOpen}
