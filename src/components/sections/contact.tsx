@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import { motion } from "motion/react";
-import { Send, Github, Linkedin, Mail, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { Send, Mail, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { GithubIcon, LinkedinIcon, XIcon } from "@/components/shared/brand-icons";
 import { z } from "zod";
 import { siteConfig } from "@/lib/constants";
 import { fadeUp } from "@/lib/animations";
@@ -30,8 +31,9 @@ function buildMailtoLink(form: ContactForm) {
 }
 
 const socialLinks = [
-  { href: siteConfig.links.github, icon: Github, label: "GitHub", handle: "@allannuwamanya" },
-  { href: siteConfig.links.linkedin, icon: Linkedin, label: "LinkedIn", handle: "in/allan-nuwamanya" },
+  { href: siteConfig.links.github, icon: GithubIcon, label: "GitHub", handle: "@allannuwamanya" },
+  { href: siteConfig.links.linkedin, icon: LinkedinIcon, label: "LinkedIn", handle: "in/allan-nuwamanya" },
+  { href: siteConfig.links.twitter ?? "#", icon: XIcon, label: "X", handle: "@allannuwamanya" },
   { href: `mailto:${siteConfig.links.email}`, icon: Mail, label: "Email", handle: siteConfig.links.email },
 ];
 

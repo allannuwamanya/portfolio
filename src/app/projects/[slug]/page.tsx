@@ -3,7 +3,6 @@ import Link from "next/link";
 import {
   ArrowLeft,
   ArrowUpRight,
-  Github,
   ExternalLink,
   Tag,
   Layers,
@@ -14,6 +13,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { notFound } from "next/navigation";
+import { GithubIcon } from "@/components/shared/brand-icons";
 import { projectsData } from "@/data/projects";
 import React from "react";
 
@@ -100,7 +100,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-6 py-3 text-sm font-bold text-foreground transition-all hover:bg-secondary"
               >
-                View Source <Github className="h-4 w-4" />
+                View Source <GithubIcon className="h-4 w-4" />
               </a>
             )}
           </div>
@@ -159,7 +159,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
               {/* ASCII Diagram if it exists */}
               {caseStudy?.architectureDiagram && (
-                <div className="my-8 rounded-xl border border-border bg-[#0d0d0d] p-6 overflow-x-auto">
+                <div className="my-8 rounded-xl border border-border bg-card p-6 overflow-x-auto">
                   <div className="mb-4 flex items-center gap-2">
                     <Workflow className="h-4 w-4 text-muted-foreground" />
                     <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest">System Architecture</span>

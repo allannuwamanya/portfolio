@@ -1,10 +1,12 @@
 import Link from "next/link";
-import { Code2, Github, Linkedin, Mail } from "lucide-react";
+import { Code2, Mail } from "lucide-react";
+import { GithubIcon, LinkedinIcon, XIcon } from "@/components/shared/brand-icons";
 import { siteConfig, mainNav } from "@/lib/constants";
 
 const socialLinks = [
-  { href: siteConfig.links.github, icon: Github, label: "GitHub" },
-  { href: siteConfig.links.linkedin, icon: Linkedin, label: "LinkedIn" },
+  { href: siteConfig.links.github, icon: GithubIcon, label: "GitHub" },
+  { href: siteConfig.links.linkedin, icon: LinkedinIcon, label: "LinkedIn" },
+  { href: siteConfig.links.twitter ?? "#", icon: XIcon, label: "X" },
   { href: `mailto:${siteConfig.links.email}`, icon: Mail, label: "Email" },
 ];
 

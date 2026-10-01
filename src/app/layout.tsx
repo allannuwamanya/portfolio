@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { siteConfig } from "@/lib/constants";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { PageTransition } from "@/components/providers/page-transition";
@@ -8,8 +8,26 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import "./globals.css";
 
-const geist = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
-const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
+// Google Sans ships under the SIL Open Font License (public/fonts/OFL.txt).
+// Loaded via next/font/local because next/font/google's bundled font catalogue
+// predates Google Sans and cannot resolve it.
+const googleSans = localFont({
+  src: "../../public/fonts/GoogleSans-Variable-latin.woff2",
+  weight: "100 900",
+  style: "normal",
+  display: "swap",
+  variable: "--font-google-sans",
+  fallback: ["system-ui", "sans-serif"],
+});
+
+const googleSansCode = localFont({
+  src: "../../public/fonts/GoogleSansCode-Variable-latin.woff2",
+  weight: "100 800",
+  style: "normal",
+  display: "swap",
+  variable: "--font-google-sans-code",
+  fallback: ["ui-monospace", "monospace"],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -27,13 +45,13 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     siteName: siteConfig.name,
-    images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: siteConfig.name }],
+    // The generated opengraph-image.tsx resolves automatically relative to
+    // metadataBase, so no explicit URL is needed here.
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.title,
     description: siteConfig.description,
-    images: [siteConfig.ogImage],
     creator: "@allannuwamanya",
   },
   robots: { index: true, follow: true },
@@ -42,7 +60,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geist.variable} ${geistMono.variable} min-h-screen`}>
+      <body className={`${googleSans.variable} ${googleSansCode.variable} min-h-screen`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
             <NextTopLoader
               color="hsl(155, 62%, 45%)"

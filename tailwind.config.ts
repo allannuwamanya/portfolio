@@ -57,8 +57,8 @@ const config: Config = {
         "3xl": "1.5rem",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
-        mono: ["var(--font-geist-mono)", "Menlo", "monospace"],
+        sans: ["var(--font-google-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-google-sans-code)", "ui-monospace", "monospace"],
       },
       animation: {
         "blink": "blink 1s step-start infinite",
