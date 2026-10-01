@@ -3,7 +3,8 @@
 import * as React from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
-import { ArrowUpRight, Github, ExternalLink, Star, Search, Code2 } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Star, Search, Code2 } from "lucide-react";
+import { GithubIcon } from "@/components/shared/brand-icons";
 import { Project, ProjectCategory } from "@/types";
 import { cn } from "@/lib/utils";
 
@@ -166,7 +167,7 @@ export function ProjectsArchive({ initialProjects }: { initialProjects: Project[
                     </Link>
                     {project.repoUrl && (
                       <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-                        <Github className="h-4 w-4" />
+                        <GithubIcon className="h-4 w-4" />
                       </a>
                     )}
                     {project.demoUrl && (

@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
-import { ArrowUpRight, Github, ExternalLink, ArrowRight, Star } from "lucide-react";
+import { ArrowUpRight, ExternalLink, ArrowRight, Star } from "lucide-react";
+import { GithubIcon } from "@/components/shared/brand-icons";
 import { projectsData } from "@/data/projects";
 import { siteConfig } from "@/lib/constants";
 
@@ -153,7 +154,7 @@ function ProjectCard({ project, index }: { project: (typeof projectsData)[number
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 font-bold text-muted-foreground transition-colors hover:text-accent"
               >
-                <Github className="h-3 w-3" /> Code
+                <GithubIcon className="h-3 w-3" /> Code
               </Link>
             )}
           </div>

@@ -60,14 +60,14 @@ export function Navbar() {
                 className={cn(
                   "relative rounded-lg px-3.5 py-2 text-sm font-medium transition-colors duration-200",
                   isActive(item.href)
-                    ? "text-foreground"
+                    ? "text-accent"
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
                 {isActive(item.href) && (
                   <motion.span
                     layoutId="nav-active"
-                    className="absolute inset-0 rounded-lg bg-secondary"
+                    className="absolute inset-0 rounded-lg border border-accent/40 bg-accent/10"
                     transition={{ duration: 0.2 }}
                   />
                 )}
@@ -151,10 +151,10 @@ export function Navbar() {
                       href={item.href}
                       onClick={() => setIsOpen(false)}
                       className={cn(
-                        "block rounded-xl px-4 py-3 text-base font-semibold transition-colors",
+                        "block rounded-xl border px-4 py-3 text-base font-semibold transition-colors",
                         isActive(item.href)
-                          ? "bg-accent/10 text-accent"
-                          : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                          ? "border-accent/40 bg-accent/10 text-accent"
+                          : "border-transparent text-muted-foreground hover:bg-secondary hover:text-foreground"
                       )}
                     >
                       {item.title}

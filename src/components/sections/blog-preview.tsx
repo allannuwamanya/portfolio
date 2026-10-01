@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { ArrowRight, Github, FileText } from "lucide-react";
+import { ArrowRight, FileText } from "lucide-react";
+import { GithubIcon } from "@/components/shared/brand-icons";
 import { fadeUp } from "@/lib/animations";
 import { siteConfig } from "@/lib/constants";
 
@@ -60,7 +61,7 @@ export function BlogPreviewSection() {
             rel="noopener noreferrer"
             className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-accent hover:underline"
           >
-            <Github className="h-4 w-4" />
+            <GithubIcon className="h-4 w-4" />
             Browse the GitHub profile
             <ArrowRight className="h-4 w-4" />
           </a>
