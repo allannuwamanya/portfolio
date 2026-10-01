@@ -111,6 +111,10 @@ export interface CommunityEvent {
   date: string;
   location: string;
   format?: "In person" | "Virtual" | "Hybrid";
+  /** Public path to a photo, certificate, or banner — e.g. "/events/name.jpg". */
+  image?: string;
+  /** Defaults to the event title. Write it for someone who cannot see the image. */
+  imageAlt?: string;
   summary: string;
   /** What it changed in your work. This is the part a reader actually cares about. */
   takeaway?: string;

@@ -1,10 +1,13 @@
 "use client";
 
+import * as React from "react";
+import Image from "next/image";
 import { motion } from "motion/react";
 import { ArrowUpRight, CalendarDays, MapPin, Mic, Radio, Users, Sparkles } from "lucide-react";
 import { eventsData } from "@/data/events";
 import type { CommunityEvent } from "@/types";
 import { fadeUp } from "@/lib/animations";
+import { assetUrl } from "@/lib/asset-url";
 import { cn } from "@/lib/utils";
 
 const ROLE_CONFIG = {
@@ -35,6 +38,28 @@ function groupByYear(events: CommunityEvent[]) {
     years.set(year, [...(years.get(year) ?? []), event]);
   }
   return [...years.entries()];
+}
+
+/**
+ * Event images are optional and user-supplied, so a wrong path is likely.
+ * Rather than leaving a broken frame, drop the image and keep the card.
+ */
+function EventImage({ event }: { event: CommunityEvent }) {
+  const [failed, setFailed] = React.useState(false);
+  if (failed || !event.image) return null;
+
+  return (
+    <div className="relative -mx-6 -mt-6 mb-1 aspect-[16/9] overflow-hidden rounded-t-[1.25rem] border-b border-border/60">
+      <Image
+        src={assetUrl(event.image)}
+        alt={event.imageAlt ?? event.title}
+        fill
+        onError={() => setFailed(true)}
+        className="object-cover transition-transform duration-500 hover:scale-[1.03]"
+        sizes="(max-width: 896px) 100vw, 896px"
+      />
+    </div>
+  );
 }
 
 export function EventsSection() {
@@ -102,6 +127,10 @@ export function EventsSection() {
                       viewport={{ once: true, margin: "-60px" }}
                       className="gradient-border bento-card flex flex-col gap-3"
                     >
+                      {event.image && (
+                        <EventImage event={event} />
+                      )}
+
                       <div className="flex flex-wrap items-center gap-2">
                         <span
                           className={cn(

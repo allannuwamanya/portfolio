@@ -1,3 +1,5 @@
+import { BASE_PATH } from "./src/lib/base-path.mjs";
+
 /** @type {import('next').NextConfig} */
 const isProd = process.env.NODE_ENV === "production";
 
@@ -6,8 +8,10 @@ const nextConfig = {
   output: "export",
 
   // basePath for project pages: https://allannuwamanya.github.io/portfolio/
-  basePath: isProd ? "/portfolio" : "",
-  assetPrefix: isProd ? "/portfolio/" : "",
+  // Shared with src/lib/asset-url.ts, which prefixes public-folder assets that
+  // next/image leaves unprefixed under `images.unoptimized`.
+  basePath: BASE_PATH,
+  assetPrefix: isProd ? `${BASE_PATH}/` : "",
 
   // Required for static export — disables Next.js image optimisation
   images: {
