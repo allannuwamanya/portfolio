@@ -53,13 +53,6 @@ function IconRibbon() {
 export function SkillsSection() {
   return (
     <section id="skills" className="relative py-28 overflow-hidden bg-secondary/20">
-      {/* Decorative BG number */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 select-none text-[20vw] font-black leading-none text-foreground/[0.025]"
-      >
-        05
-      </div>
 
       <div className="container max-w-6xl relative z-10">
         <motion.div
@@ -69,10 +62,10 @@ export function SkillsSection() {
           viewport={{ once: true, margin: "-80px" }}
           className="mb-14"
         >
-          <p className="font-mono text-sm text-accent mb-3 tracking-wider uppercase">05 / tech stack</p>
-          <h2 className="text-4xl font-black tracking-tight sm:text-5xl">
+          <p className="font-mono text-sm text-accent mb-3 tracking-wider uppercase">Tech stack</p>
+          <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
             Tools of the <span className="gradient-text">trade</span>
-          </h2>
+          </h1>
           <p className="mt-4 max-w-xl text-base text-muted-foreground leading-relaxed">
             Technologies I reach for to design, build, and ship reliable software at scale.
           </p>
@@ -87,7 +80,7 @@ export function SkillsSection() {
           <IconRibbon />
         </motion.div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2">
           {skillCategories.map((category, ci) => (
             <motion.div
               key={category.title}
@@ -100,29 +93,31 @@ export function SkillsSection() {
             >
               <h3 className="text-sm font-bold text-foreground tracking-wide">{category.title}</h3>
 
-              <div className="grid grid-cols-4 gap-2.5 sm:grid-cols-6">
+              <ul className="flex flex-col gap-1.5">
                 {category.skills.map((skill) => (
-                  <div
+                  <li
                     key={skill.name}
-                    title={`${skill.name} — ${skill.level}`}
-                    className="group relative flex aspect-square items-center justify-center rounded-xl border border-border/60 bg-background/40 transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 hover:bg-accent/5"
+                    className="group flex items-center gap-3 rounded-xl border border-border/50 bg-background/40 px-3 py-2.5 transition-colors duration-300 hover:border-accent/40 hover:bg-accent/5"
                   >
                     <TechIcon
                       name={skill.name}
-                      title={skill.name}
-                      className="h-7 w-7 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
+                      className="h-5 w-5 shrink-0 transition-transform duration-300 group-hover:scale-110"
                     />
+                    <span className="min-w-0 flex-1 text-sm font-medium text-foreground/90">
+                      {skill.name}
+                    </span>
                     {skill.level && (
-                      <span
-                        className={cn(
-                          "absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full",
-                          LEVEL_DOT[skill.level] ?? "bg-accent",
-                        )}
-                      />
+                      <span className="flex shrink-0 items-center gap-1.5 text-[10px] font-bold text-muted-foreground">
+                        <span
+                          aria-hidden
+                          className={cn("h-1.5 w-1.5 rounded-full", LEVEL_DOT[skill.level] ?? "bg-accent")}
+                        />
+                        {skill.level}
+                      </span>
                     )}
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </motion.div>
           ))}
         </div>

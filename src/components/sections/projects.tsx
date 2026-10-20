@@ -173,13 +173,6 @@ export function ProjectsSection() {
     <section id="projects" className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 mesh-bg opacity-40" />
 
-      {/* Decorative large background number */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 select-none text-[22vw] font-black leading-none text-foreground/[0.02] lg:text-[16vw]"
-      >
-        03
-      </div>
 
       <div className="container max-w-6xl relative z-10">
         <motion.div
@@ -190,7 +183,7 @@ export function ProjectsSection() {
           className="mb-16 flex flex-wrap items-end justify-between gap-4"
         >
           <div>
-            <p className="font-mono text-sm text-accent mb-3 tracking-wider uppercase">03 / selected systems</p>
+            <p className="font-mono text-sm text-accent mb-3 tracking-wider uppercase">Selected work</p>
             <h2 className="text-4xl font-black tracking-tight sm:text-5xl">
               Software I&apos;ve{" "}
               <span className="gradient-text">engineered</span>

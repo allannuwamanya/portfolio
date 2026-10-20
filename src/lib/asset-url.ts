@@ -1,16 +1,17 @@
-import { BASE_PATH } from "./base-path.mjs";
-
 /**
- * Resolves a public-folder path for use as an image `src`.
+ * Resolves an image path from the data files to a URL.
  *
- * `output: "export"` forces `images.unoptimized`, and Next's loader returns the
- * src verbatim in that mode — it does *not* prepend `basePath`. Anything served
- * out of `public/` therefore needs the prefix added by hand, or it 404s once
- * the site is served from https://<user>.github.io/portfolio/.
+ * Event and experience photos are served from a Cloudflare R2 bucket so the
+ * repository stays small. Set NEXT_PUBLIC_ASSETS_URL to the bucket's public
+ * origin (e.g. https://assets.allannuwamanya.dev) and write paths relative to
+ * it in the data files: "/events/dsa-workshop.jpg".
  *
- * Absolute URLs are returned untouched.
+ * Absolute URLs pass through untouched, and with no bucket configured the path
+ * resolves against the site's own `public/` folder.
  */
+const ASSETS_URL = (process.env.NEXT_PUBLIC_ASSETS_URL ?? "").replace(/\/$/, "");
+
 export function assetUrl(path: string): string {
   if (/^(https?:)?\/\//.test(path) || path.startsWith("data:")) return path;
-  return `${BASE_PATH}${path.startsWith("/") ? path : `/${path}`}`;
+  return `${ASSETS_URL}${path.startsWith("/") ? path : `/${path}`}`;
 }

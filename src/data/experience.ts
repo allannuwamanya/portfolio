@@ -1,34 +1,65 @@
 import { ExperienceItem } from "@/types";
 
+/**
+ * Internships, jobs, hackathons, fellowships and competitions — newest first
+ * is not required, the page sorts by start date.
+ *
+ * Only list what you can stand behind: every line here is read by recruiters.
+ * The page, its filters and the nav link are already wired; add an object and
+ * it appears.
+ *
+ * Photos and certificates go in the R2 bucket (NEXT_PUBLIC_ASSETS_URL) and are
+ * referenced by path.
+ *
+ *   {
+ *     id: "exp-kampala-hack-2025",
+ *     kind: "Hackathon",   // Internship | Full-time | Contract | Hackathon |
+ *                          // Bootcamp | Fellowship | Volunteer | Open Source | Competition
+ *     role: "Backend Engineer",
+ *     organization: "Kampala Tech Hackathon",
+ *     organizationUrl: "https://...",          // optional
+ *     location: "Kampala, Uganda",
+ *     startDate: "2025-03",                    // YYYY-MM or YYYY
+ *     endDate: "2025-03",                      // optional; "Present" if ongoing
+ *     summary: "One line on what it was and what you owned.",
+ *     highlights: ["Built X so that Y.", "Shipped Z in 48 hours."],   // optional
+ *     outcome: "1st place of 40 teams",        // optional
+ *     technologies: ["Python", "FastAPI"],     // optional
+ *     images: [                                // optional; first is the cover, all open in a lightbox
+ *       { src: "/experience/kampala-hack-2025.jpg", alt: "The team presenting on stage" },
+ *     ],
+ *     link: "https://...",                     // optional: certificate / write-up
+ *   }
+ */
 export const experienceData: ExperienceItem[] = [
   {
-    id: "exp-1",
-    role: "Full-Stack Software Engineer",
-    company: "Tech Innovation Hub",
-    location: "Remote",
-    startDate: "2023",
-    endDate: "Present",
-    current: true,
-    description: [
-      "Architected and shipped modular web applications serving thousands of daily active users.",
-      "Optimized frontend bundle size and rendering pipelines, reducing Core Web Vitals LCP by 45%.",
-      "Designed resilient REST and GraphQL APIs with automated unit, integration, and end-to-end testing.",
+    id: "paylink-tech-preneurship-2025",
+    kind: "Bootcamp",
+    role: "Pitched PayLink",
+    organization: "Tech-Preneurship Bootcamp 2025 · Mbarara University of Science & Technology (IUC-UCoBS) × Kreative Campus",
+    location: "Mbarara, Uganda",
+    startDate: "2025",
+    summary:
+      "Pitched PayLink on the bootcamp's final day: a payments platform that brings mobile-money services and utilities into one seamless app through public APIs, so people no longer need a separate app for each.",
+    highlights: [
+      "Designed PayLink to consolidate mobile-money services and utilities behind a single interface built on public APIs.",
+      "Proposed a business model of a 1.5% transaction fee, sponsored integrations, and premium payment features.",
+      "Took a security-first approach to how the platform handles transactions.",
     ],
-    technologies: ["TypeScript", "Next.js", "Node.js", "PostgreSQL", "Docker", "Tailwind CSS"],
-  },
-  {
-    id: "exp-2",
-    role: "Software Developer",
-    company: "Digital Solutions Lab",
-    location: "Kampala, Uganda",
-    startDate: "2022",
-    endDate: "2023",
-    current: false,
-    description: [
-      "Collaborated in agile cross-functional sprints to deliver client web platforms on deadline.",
-      "Engineered interactive dashboards with real-time WebSocket state synchronization.",
-      "Streamlined CI/CD pipelines via GitHub Actions, automating testing and zero-downtime deployment.",
+    technologies: ["Public APIs", "Mobile Money", "FinTech"],
+    images: [
+      {
+        src: "/experience/paylink-pitch-2.jpg",
+        alt: "Pitching PayLink on stage at the Tech-Preneurship Bootcamp 2025, broadcast live from TIV Mbarara.",
+      },
+      {
+        src: "/experience/paylink-pitch-1.jpg",
+        alt: "Presenting during the session on synergy between IUC-UCoBS Projects 5 and 6, with a teammate at the laptop.",
+      },
+      {
+        src: "/certifications/tech-preneurship-bootcamp-2025.jpg",
+        alt: "Receiving a certificate on stage at the end of the bootcamp.",
+      },
     ],
-    technologies: ["React", "JavaScript", "Express.js", "MongoDB", "Git", "CSS Modules"],
   },
 ];

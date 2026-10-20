@@ -32,8 +32,8 @@ function buildMailtoLink(form: ContactForm) {
 
 const socialLinks = [
   { href: siteConfig.links.github, icon: GithubIcon, label: "GitHub", handle: "@allannuwamanya" },
-  { href: siteConfig.links.linkedin, icon: LinkedinIcon, label: "LinkedIn", handle: "in/allan-nuwamanya" },
-  { href: siteConfig.links.twitter ?? "#", icon: XIcon, label: "X", handle: "@allannuwamanya" },
+  { href: siteConfig.links.linkedin, icon: LinkedinIcon, label: "LinkedIn", handle: "in/allannuwamanya" },
+  { href: siteConfig.links.twitter ?? "#", icon: XIcon, label: "X", handle: "@allannuwamanya_" },
   { href: `mailto:${siteConfig.links.email}`, icon: Mail, label: "Email", handle: siteConfig.links.email },
 ];
 
@@ -66,6 +66,7 @@ export function ContactSection() {
     try {
       if (!FORMSPREE_ENDPOINT) {
         window.location.href = buildMailtoLink(form);
+        setStatus("idle");
         return;
       }
       const res = await fetch(FORMSPREE_ENDPOINT, {
@@ -86,13 +87,6 @@ export function ContactSection() {
 
   return (
     <section id="contact" className="relative py-28 overflow-hidden bg-secondary/20">
-      {/* Decorative BG number */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 select-none text-[20vw] font-black leading-none text-foreground/[0.025]"
-      >
-        07
-      </div>
 
       <div className="container max-w-6xl relative z-10">
         <motion.div
@@ -102,10 +96,10 @@ export function ContactSection() {
           viewport={{ once: true, margin: "-80px" }}
           className="mb-14"
         >
-          <p className="font-mono text-sm text-accent mb-3 tracking-wider uppercase">07 / contact</p>
-          <h2 className="text-4xl font-black tracking-tight sm:text-5xl">
+          <p className="font-mono text-sm text-accent mb-3 tracking-wider uppercase">Contact</p>
+          <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
             Let&apos;s <span className="gradient-text">work together</span>
-          </h2>
+          </h1>
         </motion.div>
 
         <div className="grid gap-10 lg:grid-cols-2">
@@ -148,11 +142,11 @@ export function ContactSection() {
             viewport={{ once: true, margin: "-60px" }}
           >
             {status === "success" ? (
-              <div className="bento-card flex flex-col items-center justify-center gap-4 py-16 text-center border-emerald-500/30">
+              <div role="status" className="bento-card flex flex-col items-center justify-center gap-4 py-16 text-center border-emerald-500/30">
                 <CheckCircle className="h-12 w-12 text-emerald-400" />
                 <h3 className="text-xl font-bold text-foreground">Message sent!</h3>
                 <p className="text-muted-foreground text-sm">I&apos;ll get back to you as soon as possible.</p>
-                <button onClick={() => setStatus("idle")} className="mt-2 text-sm text-accent hover:underline">
+                <button type="button" onClick={() => setStatus("idle")} className="mt-2 text-sm text-accent hover:underline">
                   Send another
                 </button>
               </div>
@@ -161,10 +155,15 @@ export function ContactSection() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   {(["name", "email"] as const).map((field) => (
                     <div key={field} className="flex flex-col gap-1.5">
-                      <label htmlFor={field} className="text-xs font-medium text-muted-foreground capitalize">{field}</label>
+                      <label htmlFor={field} className="text-xs font-medium text-muted-foreground">
+                        {field === "name" ? "Name" : "Email"}
+                      </label>
                       <input
                         id={field} name={field}
                         type={field === "email" ? "email" : "text"}
+                        autoComplete={field === "email" ? "email" : "name"}
+                        aria-invalid={Boolean(errors[field])}
+                        aria-describedby={errors[field] ? `${field}-error` : undefined}
                         value={form[field]} onChange={handleChange}
                         placeholder={field === "name" ? "Your name" : "your@email.com"}
                         className={cn(
@@ -172,7 +171,7 @@ export function ContactSection() {
                           errors[field] ? "border-destructive" : "border-border"
                         )}
                       />
-                      {errors[field] && <p className="text-xs text-destructive">{errors[field]}</p>}
+                      {errors[field] && <p id={`${field}-error`} className="text-xs text-destructive">{errors[field]}</p>}
                     </div>
                   ))}
                 </div>
@@ -181,6 +180,8 @@ export function ContactSection() {
                   <label htmlFor="subject" className="text-xs font-medium text-muted-foreground">Subject</label>
                   <input
                     id="subject" name="subject" type="text"
+                    aria-invalid={Boolean(errors.subject)}
+                    aria-describedby={errors.subject ? "subject-error" : undefined}
                     value={form.subject} onChange={handleChange}
                     placeholder="What's it about?"
                     className={cn(
@@ -188,13 +189,15 @@ export function ContactSection() {
                       errors.subject ? "border-destructive" : "border-border"
                     )}
                   />
-                  {errors.subject && <p className="text-xs text-destructive">{errors.subject}</p>}
+                  {errors.subject && <p id="subject-error" className="text-xs text-destructive">{errors.subject}</p>}
                 </div>
 
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="message" className="text-xs font-medium text-muted-foreground">Message</label>
                   <textarea
                     id="message" name="message" rows={5}
+                    aria-invalid={Boolean(errors.message)}
+                    aria-describedby={errors.message ? "message-error" : undefined}
                     value={form.message} onChange={handleChange}
                     placeholder="Tell me about your project or idea..."
                     className={cn(
@@ -202,13 +205,13 @@ export function ContactSection() {
                       errors.message ? "border-destructive" : "border-border"
                     )}
                   />
-                  {errors.message && <p className="text-xs text-destructive">{errors.message}</p>}
+                  {errors.message && <p id="message-error" className="text-xs text-destructive">{errors.message}</p>}
                 </div>
 
                 {status === "error" && (
-                  <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                  <div role="alert" className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
                     <AlertCircle className="h-4 w-4 flex-shrink-0" />
-                    Something went wrong. Please email me directly.
+                    Something went wrong. Please email me directly at {siteConfig.links.email}.
                   </div>
                 )}
 

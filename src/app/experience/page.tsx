@@ -3,7 +3,7 @@ import { ExperienceSection } from "@/components/sections/experience";
 
 export const metadata: Metadata = {
   title: "Experience",
-  description: "Professional software engineering career, roles, and technical achievements.",
+  description: "Internships, hackathons, fellowships, and team projects — where the engineering was done under real constraints.",
 };
 
 export default function ExperiencePage() {

@@ -11,10 +11,9 @@ export const projectsData: Project[] = [
     category: "AI & Speech",
     featured: true,
     tags: ["Python 3.10+", "PyTorch", "Mypy", "Ruff", "Speech-AI", "Luganda NLP", "FastAPI"],
-    image: "/projects/lingualdub.png",
     demoUrl: "https://lingualdub.pages.dev",
     repoUrl: "https://github.com/allannuwamanya/lingualdub",
-    stars: 5,
+    stars: 6,
     metrics: [
       { label: "Reference Lang", value: "Luganda (lug)" },
       { label: "Architecture", value: "Registry-Driven" },
@@ -70,7 +69,6 @@ export const projectsData: Project[] = [
     category: "Systems & Backend",
     featured: true,
     tags: ["Temporal.io", "NestJS", "Next.js", "TypeScript", "Prisma", "PostgreSQL", "pnpm Monorepo"],
-    image: "/projects/collosy.png",
     repoUrl: "https://github.com/allannuwamanya/collosy",
     metrics: [
       { label: "Orchestrator", value: "Temporal.io" },
@@ -130,8 +128,6 @@ export const projectsData: Project[] = [
     category: "Fintech & Web3",
     featured: true,
     tags: ["Node.js", "Express", "TRON Network", "TRC20", "Supabase", "Flutterwave API", "Sunmi POS"],
-    image: "/projects/crypto-pos.png",
-    repoUrl: "https://github.com/allannuwamanya/crypto-fiat-bridge-POS",
     metrics: [
       { label: "On-Ramp", value: "UGX → USDT" },
       { label: "Hardware", value: "Sunmi POS" },
@@ -191,7 +187,7 @@ export const projectsData: Project[] = [
     category: "Open Data",
     featured: true,
     tags: ["Data Engineering", "JavaScript", "Python / Pandas", "GitHub Actions CI", "Open Formats"],
-    image: "/projects/open-data.png",
+    demoUrl: "https://opendata-ug.pages.dev",
     repoUrl: "https://github.com/allannuwamanya/open-data-uganda",
     stars: 14,
     metrics: [
@@ -258,7 +254,7 @@ Standardized CSV                         Streamable JSONL
     featured: false,
     tags: ["Python", "PyTorch", "Transformers", "Self-Attention", "Word2Vec", "NLP"],
     repoUrl: "https://github.com/allannuwamanya/CS224N-Stanford-NLP-Study",
-    stars: 16,
+    stars: 17,
     metrics: [
       { label: "Curriculum", value: "Stanford CS224N" },
       { label: "Community", value: "16 Stars ⭐" },
@@ -297,7 +293,6 @@ Standardized CSV                         Streamable JSONL
     category: "Systems & Backend",
     featured: false,
     tags: ["TypeScript", "Desktop App", "CLI Tools", "Terminal Emulation", "Developer Tooling"],
-    repoUrl: "https://github.com/allannuwamanya/foundry",
     metrics: [
       { label: "Focus", value: "CLI Workflows" },
       { label: "Target", value: "Power Developers" },
@@ -336,8 +331,6 @@ Standardized CSV                         Streamable JSONL
     category: "Web Apps",
     featured: false,
     tags: ["React 19", "Express 5", "Drizzle ORM", "PostgreSQL", "Tailwind 4", "Cloudinary CDN"],
-    demoUrl: "https://discover-uganda.vercel.app",
-    repoUrl: "https://github.com/allannuwamanya/discoveruganda",
     metrics: [
       { label: "Frontend", value: "React 19" },
       { label: "Backend", value: "Express 5 + Drizzle" },
@@ -361,7 +354,6 @@ Standardized CSV                         Streamable JSONL
         },
       ],
       impact: [
-        "Live deployment running on Vercel at discover-uganda.vercel.app",
         "Directly connects local safari and cultural operators to new booking channels",
       ],
     },
@@ -415,7 +407,7 @@ Standardized CSV                         Streamable JSONL
     category: "Systems & Backend",
     featured: false,
     tags: ["Django REST", "Python", "PostgreSQL / PostGIS", "Celery", "Redis", "Geo-Logistics"],
-    repoUrl: "https://github.com/allannuwamanya/school-run-be",
+    repoUrl: "https://github.com/allannuwamanya/school-run-backend",
     metrics: [
       { label: "Routing", value: "Haversine Engine" },
       { label: "Spatial DB", value: "PostgreSQL + PostGIS" },
@@ -493,7 +485,6 @@ Standardized CSV                         Streamable JSONL
     category: "Web Apps",
     featured: false,
     tags: ["React", "JavaScript", "Mobile-First", "E-Commerce", "SME Tooling"],
-    repoUrl: "https://github.com/allannuwamanya/Dukafy",
     metrics: [
       { label: "Target", value: "East African SMEs" },
       { label: "Form Factor", value: "Mobile Browser" },
@@ -532,7 +523,6 @@ Standardized CSV                         Streamable JSONL
     category: "AI & Speech",
     featured: false,
     tags: ["Next.js 15", "TypeScript", "Tailwind CSS", "Framer Motion", "Zustand"],
-    repoUrl: "https://github.com/allannuwamanya/bastian",
     metrics: [
       { label: "Framework", value: "Next.js 15" },
       { label: "State", value: "Zustand" },

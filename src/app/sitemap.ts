@@ -1,35 +1,33 @@
 import type { MetadataRoute } from "next";
+import { mainNav, siteConfig } from "@/lib/constants";
 import { projectsData } from "@/data/projects";
-
-/**
- * Generated sitemap. With `output: "export"` this is evaluated at build
- * time and emitted as a static /sitemap.xml.
- *
- * next.config.mjs sets basePath to "/portfolio" in production, and Next
- * applies that prefix to metadata routes automatically — so paths here
- * stay unprefixed and relative to the site root.
- */
 
 // Required alongside `output: "export"`: metadata routes must declare that
 // they are static or Next refuses to prerender them.
 export const dynamic = "force-static";
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://allannuwamanya.dev";
 
+const PRIORITY: Record<string, number> = {
+  "/projects": 0.9,
+  "/experience": 0.7,
+  "/skills": 0.7,
+  "/certifications": 0.7,
+};
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const base = siteConfig.url;
+
+  // Built from the nav so a new page can never be left out of the sitemap.
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: `${baseUrl}/`, changeFrequency: "monthly", priority: 1 },
-    { url: `${baseUrl}/about`, changeFrequency: "yearly", priority: 0.6 },
-    { url: `${baseUrl}/experience`, changeFrequency: "yearly", priority: 0.7 },
-    { url: `${baseUrl}/events`, changeFrequency: "monthly", priority: 0.5 },
-    { url: `${baseUrl}/projects`, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${baseUrl}/skills`, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${baseUrl}/blog`, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${baseUrl}/contact`, changeFrequency: "yearly", priority: 0.5 },
+    { url: `${base}/`, changeFrequency: "monthly", priority: 1 },
+    ...mainNav.map((item) => ({
+      url: `${base}${item.href}/`,
+      changeFrequency: "monthly" as const,
+      priority: PRIORITY[item.href] ?? 0.6,
+    })),
   ];
 
-  // Every project gets its case-study route, matching generateStaticParams.
   const projectRoutes: MetadataRoute.Sitemap = projectsData.map((project) => ({
-    url: `${baseUrl}/projects/${project.slug}`,
+    url: `${base}/projects/${project.slug}/`,
     changeFrequency: "monthly",
     priority: 0.8,
   }));

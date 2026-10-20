@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { siteConfig } from "@/lib/constants";
-import { PageTransition } from "@/components/providers/page-transition";
 import NextTopLoader from "nextjs-toploader";
+import { MotionProvider } from "@/components/providers/motion-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import "./globals.css";
@@ -28,6 +28,11 @@ const googleSansCode = localFont({
   fallback: ["ui-monospace", "monospace"],
 });
 
+export const viewport: Viewport = {
+  themeColor: "#000000",
+  colorScheme: "dark",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
@@ -37,6 +42,8 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   authors: [{ name: siteConfig.author, url: siteConfig.url }],
   creator: siteConfig.author,
+  // "./" resolves per page against metadataBase, giving each route its own canonical URL.
+  alternates: { canonical: "./" },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -51,9 +58,20 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.title,
     description: siteConfig.description,
-    creator: "@allannuwamanya",
+    creator: "@allannuwamanya_",
   },
   robots: { index: true, follow: true },
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: siteConfig.name,
+  url: siteConfig.url,
+  jobTitle: "Full-Stack Software Engineer",
+  description: siteConfig.description,
+  address: { "@type": "PostalAddress", addressLocality: "Kampala", addressCountry: "UG" },
+  sameAs: [siteConfig.links.github, siteConfig.links.linkedin, siteConfig.links.twitter].filter(Boolean),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -71,11 +89,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           speed={200}
           shadow="0 0 10px hsl(155, 62%, 45%), 0 0 5px hsl(155, 62%, 45%)"
         />
-        <Navbar />
-        <PageTransition>
-          <main>{children}</main>
-        </PageTransition>
-        <Footer />
+        <a
+          href="#main"
+          className="sr-only z-[60] rounded-lg bg-accent px-4 py-2 text-sm font-bold text-accent-foreground focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        >
+          Skip to content
+        </a>
+        <MotionProvider>
+          <Navbar />
+          <main id="main" tabIndex={-1} className="outline-none">
+            {children}
+          </main>
+          <Footer />
+        </MotionProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
       </body>
     </html>
   );

@@ -42,7 +42,7 @@ export function ProjectsArchive({ initialProjects }: { initialProjects: Project[
       {/* Header */}
       <div className="mb-12">
         <p className="font-mono text-sm text-accent mb-3 tracking-wider uppercase flex items-center gap-2">
-          <span className="h-px w-8 bg-accent" /> 03 / engineering archive
+          <span className="h-px w-8 bg-accent" /> Engineering archive
         </p>
         <h1 className="text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl text-foreground">
           Systems &amp; software
