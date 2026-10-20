@@ -41,7 +41,7 @@ export const experienceData: ExperienceItem[] = [
     organization: "Langratia",
     organizationUrl: "https://langratia.com/",
     logo: { src: "/experience/logos/langratia.png", alt: "Langratia logo" },
-    location: "Uganda",
+    location: "Mbarara, Uganda · Hybrid",
     startDate: "2026-07",
     endDate: "Present",
     summary:
