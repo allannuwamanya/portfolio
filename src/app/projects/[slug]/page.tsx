@@ -8,7 +8,6 @@ import {
   Layers,
   Star,
   CheckCircle2,
-  Cpu,
   Workflow,
   Sparkles,
 } from "lucide-react";
@@ -16,7 +15,6 @@ import { notFound } from "next/navigation";
 import { GithubIcon } from "@/components/shared/brand-icons";
 import { TechTag } from "@/components/shared/tech-tag";
 import { projectsData } from "@/data/projects";
-import React from "react";
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
@@ -44,6 +42,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   if (!project) notFound();
 
   const caseStudy = project.caseStudy;
+  const index = projectsData.findIndex((item) => item.slug === slug);
+  const previous = projectsData[(index - 1 + projectsData.length) % projectsData.length];
+  const next = projectsData[(index + 1) % projectsData.length];
 
   return (
     <article className="min-h-screen">
@@ -133,9 +134,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           )}
         </div>
 
-        <div className="grid gap-16 lg:grid-cols-[1fr_250px]">
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(0,1fr)_250px]">
           {/* Main Case Study Content */}
-          <div className="space-y-16">
+          <div className="min-w-0 space-y-16">
             
             {/* The Problem */}
             <section>
@@ -144,7 +145,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 The Challenge
               </h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
-                <p>{caseStudy?.challenge ?? "No challenge documentation provided."}</p>
+                <p>{caseStudy?.challenge}</p>
               </div>
             </section>
 
@@ -155,7 +156,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 Architecture &amp; Solution
               </h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed mb-8">
-                <p>{caseStudy?.approach ?? "No architecture documentation provided."}</p>
+                <p>{caseStudy?.approach}</p>
               </div>
 
               {/* ASCII Diagram if it exists */}
@@ -246,6 +247,31 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             )}
           </aside>
         </div>
+
+        {/* Previous / next project */}
+        <nav
+          aria-label="More projects"
+          className="mt-24 grid gap-4 border-t border-border pt-10 sm:grid-cols-2"
+        >
+          {[
+            { project: previous, label: "Previous project", align: "items-start" },
+            { project: next, label: "Next project", align: "items-start sm:items-end sm:text-right" },
+          ].map(({ project: target, label, align }) => (
+            <Link
+              key={label}
+              href={`/projects/${target.slug}`}
+              className={`group gradient-border bento-card flex flex-col gap-1.5 ${align}`}
+            >
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                {label}
+              </span>
+              <span className="text-lg font-black text-foreground transition-colors group-hover:text-accent">
+                {target.title}
+              </span>
+              <span className="text-sm text-muted-foreground">{target.category}</span>
+            </Link>
+          ))}
+        </nav>
       </div>
     </article>
   );

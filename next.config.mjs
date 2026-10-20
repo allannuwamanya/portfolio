@@ -1,31 +1,31 @@
-import { BASE_PATH } from "./src/lib/base-path.mjs";
+import { existsSync } from "node:fs";
 
 /** @type {import('next').NextConfig} */
-const isProd = process.env.NODE_ENV === "production";
-
 const nextConfig = {
-  // Static HTML export for GitHub Pages
+  // Static HTML export. Cloudflare Pages serves ./out from the domain root, so
+  // there is no basePath or assetPrefix to maintain.
   output: "export",
 
-  // basePath for project pages: https://allannuwamanya.github.io/portfolio/
-  // Shared with src/lib/asset-url.ts, which prefixes public-folder assets that
-  // next/image leaves unprefixed under `images.unoptimized`.
-  basePath: BASE_PATH,
-  assetPrefix: isProd ? `${BASE_PATH}/` : "",
-
-  // Required for static export — disables Next.js image optimisation
+  // The static export cannot run Next's image optimiser. Event photos live in a
+  // Cloudflare R2 bucket (see src/lib/asset-url.ts) and Cloudflare serves them.
   images: {
     unoptimized: true,
     remotePatterns: [
       { protocol: "https", hostname: "avatars.githubusercontent.com" },
-      { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "**.r2.dev" },
+      { protocol: "https", hostname: "**.r2.cloudflarestorage.com" },
     ],
   },
 
-  // Trailing slashes so GitHub Pages resolves routes correctly
+  // Each route becomes <route>/index.html, which static hosts resolve cleanly.
   trailingSlash: true,
 
   reactStrictMode: true,
+
+  env: {
+    // Résumé buttons appear automatically once public/resume.pdf exists.
+    NEXT_PUBLIC_RESUME_URL: existsSync("public/resume.pdf") ? "/resume.pdf" : "",
+  },
 };
 
 export default nextConfig;

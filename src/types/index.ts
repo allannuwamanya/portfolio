@@ -4,7 +4,6 @@ export interface SiteConfig {
   title: string;
   description: string;
   url: string;
-  ogImage: string;
   links: {
     github: string;
     linkedin: string;
@@ -17,8 +16,6 @@ export interface SiteConfig {
 export interface NavItem {
   title: string;
   href: string;
-  disabled?: boolean;
-  external?: boolean;
 }
 
 export type ProjectCategory =
@@ -28,14 +25,6 @@ export type ProjectCategory =
   | "Fintech & Web3"
   | "Open Data"
   | "Web Apps";
-
-export interface CaseStudySection {
-  title: string;
-  subtitle?: string;
-  content: string;
-  bullets?: string[];
-  codeOrArch?: string;
-}
 
 export interface CaseStudyDetails {
   challenge: string;
@@ -54,7 +43,6 @@ export interface Project {
   category: "AI & Speech" | "Systems & Backend" | "Fintech & Web3" | "Open Data" | "Web Apps";
   featured: boolean;
   tags: string[];
-  image?: string;
   demoUrl?: string;
   repoUrl?: string;
   stars?: number;
@@ -67,17 +55,41 @@ export interface Project {
   endDate?: string;
 }
 
+export type ExperienceKind =
+  | "Internship"
+  | "Full-time"
+  | "Contract"
+  | "Hackathon"
+  | "Bootcamp"
+  | "Fellowship"
+  | "Volunteer"
+  | "Open Source"
+  | "Competition";
+
 export interface ExperienceItem {
   id: string;
+  kind: ExperienceKind;
+  /** The role you held, or what you did: "Backend Intern", "Team Lead", "Finalist". */
   role: string;
-  company: string;
-  companyUrl?: string;
+  /** The company, programme, or organiser. */
+  organization: string;
+  organizationUrl?: string;
   location: string;
+  /** "YYYY-MM", or "YYYY" when the month is not known. */
   startDate: string;
-  endDate: string | "Present";
-  current: boolean;
-  description: string[];
-  technologies: string[];
+  /** Omit for a one-day event such as a hackathon, or set to "Present" if ongoing. */
+  endDate?: string | "Present";
+  /** One line: what this was and what you were responsible for. */
+  summary: string;
+  /** Concrete things you did or shipped. Numbers only if you can stand behind them. */
+  highlights?: string[];
+  /** Placement, award, or recognition: "1st place", "Top 10 of 120 teams". */
+  outcome?: string;
+  technologies?: string[];
+  /** Photos, the first one is the cover. They open in a lightbox. */
+  images?: GalleryImage[];
+  /** Certificate, project page, or write-up. */
+  link?: string;
 }
 
 export interface Skill {
@@ -89,6 +101,13 @@ export interface Skill {
 export interface SkillCategory {
   title: string;
   skills: Skill[];
+}
+
+export interface GalleryImage {
+  /** Path resolved by assetUrl() — e.g. "/events/ieee-spax-banner.jpg" (served from R2). */
+  src: string;
+  /** Describe the photo for someone who cannot see it. Also shown as the lightbox caption. */
+  alt: string;
 }
 
 export type CommunityEventKind =
@@ -107,14 +126,16 @@ export interface CommunityEvent {
   kind: CommunityEventKind;
   /** "attended" = you joined it, "spoke" = you presented, "mentored" = you helped run it. */
   role: "attended" | "spoke" | "mentored";
-  /** "YYYY-MM" — month precision is usually all that is knowable afterwards. */
-  date: string;
+  /** "YYYY-MM" or "YYYY-MM-DD". Omit if the date is not confirmed yet. */
+  date?: string;
+  /** Lists this event first within its year, ahead of the date order. */
+  pinned?: boolean;
+  /** For multi-day events, the last day, in the same format as `date`. */
+  endDate?: string;
   location: string;
   format?: "In person" | "Virtual" | "Hybrid";
-  /** Public path to a photo, certificate, or banner — e.g. "/events/name.jpg". */
-  image?: string;
-  /** Defaults to the event title. Write it for someone who cannot see the image. */
-  imageAlt?: string;
+  /** Photos, the first one is the cover. They open in a lightbox. */
+  images?: GalleryImage[];
   summary: string;
   /** What it changed in your work. This is the part a reader actually cares about. */
   takeaway?: string;
@@ -122,20 +143,30 @@ export interface CommunityEvent {
   link?: string;
 }
 
-export interface BlogPostMeta {
-  slug: string;
-  title: string;
-  description: string;
-  publishedAt: string;
-  readTime: string;
-  tags: string[];
-  published: boolean;
-  coverImage?: string;
-}
+export type CertificationKind = "Certificate" | "Award";
 
-export interface ContactFormData {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
+export interface Certification {
+  id: string;
+  kind: CertificationKind;
+  /** The name on the certificate: "Elements of AI". */
+  title: string;
+  /** Who issued it. */
+  issuer: string;
+  /** Partner institutions named on the certificate. */
+  partners?: string[];
+  /** "YYYY-MM-DD", "YYYY-MM" or "YYYY" — when it was issued or awarded. */
+  date: string;
+  /** What the document itself calls it: "Certificate of Completion". */
+  credential?: string;
+  /** "2 ECTS credits", "8-week programme". */
+  detail?: string;
+  /** What it covered, in your own words. */
+  summary: string;
+  skills?: string[];
+  /** The certificate scan or photo. Opens in a lightbox. */
+  image: GalleryImage;
+  /** "document" (default) shows the whole certificate; "photo" crops to fill the frame. */
+  imageFit?: "document" | "photo";
+  /** Public verification page. Only add one you have confirmed opens. */
+  verifyUrl?: string;
 }

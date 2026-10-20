@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
-import { ArrowUpRight, Briefcase, CalendarDays, Code2, FileText, Mail, User } from "lucide-react";
+import { ArrowUpRight, Award, Briefcase, CalendarDays, Code2, FileText, Mail } from "lucide-react";
 import { fadeUp } from "@/lib/animations";
 import { TechIcon } from "@/components/shared/tech-icon";
 
@@ -12,16 +12,16 @@ import { TechIcon } from "@/components/shared/tech-icon";
  */
 const DESTINATIONS = [
   {
-    href: "/about",
-    title: "About",
-    blurb: "Who I am, how I work, and what I care about building.",
-    icon: User,
-  },
-  {
     href: "/experience",
     title: "Experience",
-    blurb: "Roles, teams, and the systems I have shipped in production.",
+    blurb: "Internships, hackathons, and the teams I have built with.",
     icon: Briefcase,
+  },
+  {
+    href: "/certifications",
+    title: "Certifications",
+    blurb: "Certificates and awards in Python, AI, and entrepreneurship.",
+    icon: Award,
   },
   {
     href: "/skills",
@@ -76,6 +76,7 @@ export function ExploreSection() {
           {DESTINATIONS.map(({ href, title, blurb, icon: Icon }, i) => (
             <motion.div
               key={href}
+              className={i === DESTINATIONS.length - 1 && DESTINATIONS.length % 3 === 1 ? "lg:col-span-3" : undefined}
               custom={i + 1}
               variants={fadeUp}
               initial="hidden"

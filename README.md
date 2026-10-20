@@ -1,123 +1,100 @@
-# Allan Nuwamanya — Modern Developer Portfolio
+# Allan Nuwamanya — Portfolio
 
-A modern, high-performance developer portfolio and personal website engineered with Next.js 15 (App Router), React 19, TypeScript, and Tailwind CSS.
+Personal portfolio and engineering archive for Allan Nuwamanya, a full-stack engineer working on speech-AI infrastructure, durable backends, and open data. Built as a fully static site and hosted on Cloudflare Pages, with photos on Cloudflare R2.
 
----
+## Stack
 
-## ⚡ Tech Stack & Architecture
+- **Framework**: Next.js 15 (App Router, `output: "export"`), React 19
+- **Language**: TypeScript, strict mode
+- **Styling**: Tailwind CSS 3 with CSS-variable design tokens (`src/app/globals.css`)
+- **Motion**: [Motion](https://motion.dev/), with `prefers-reduced-motion` respected
+- **Validation**: Zod (contact form)
+- **Icons**: Lucide, plus brand marks generated from [Simple Icons](https://simpleicons.org) (CC0)
+- **Fonts**: Google Sans / Google Sans Code (SIL OFL), self-hosted from `public/fonts`
 
-- **Framework**: [Next.js 15](https://nextjs.org/) (App Router, Server Components & Route Handlers)
-- **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict Mode)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) with CSS variables & `@tailwindcss/container-queries`
-- **UI & Primitives**: [shadcn/ui](https://ui.shadcn.com/) and [Radix UI](https://www.radix-ui.com/) patterns
-- **Motion**: [Motion (Framer Motion)](https://motion.dev/) for smooth micro-interactions
-- **Theming**: [next-themes](https://github.com/pacocoursey/next-themes) with zero flash of unstyled content (Dark/Light mode)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **SEO & Social**: Dynamic OpenGraph images, automated `sitemap.xml`, and `robots.txt`
-- **Package Manager**: [npm](https://www.npmjs.com/)
-
----
-
-## 📁 Project Structure
+## Project structure
 
 ```
-├── .github/
-│   └── workflows/ci.yml       # Automated GitHub Actions CI pipeline
-├── public/                    # Static assets (images, project screenshots, og-images)
-├── src/
-│   ├── app/                   # Next.js App Router routes & layouts
-│   │   ├── (site)/
-│   │   │   ├── layout.tsx     # Root layout with ThemeProvider and global metadata
-│   │   │   ├── page.tsx       # Portfolio landing page
-│   │   │   └── globals.css    # Tailwind directives & CSS design tokens
-│   │   ├── api/contact/       # Type-safe contact API route handler (Zod validated)
-│   │   ├── blog/              # Technical writing & article routes
-│   │   ├── projects/          # Expanded project showcase catalog
-│   │   ├── robots.ts          # Search engine crawler policies
-│   │   └── sitemap.ts         # Automated sitemap generator
-│   ├── components/
-│   │   ├── layout/            # Container, Navbar, Footer, MobileNav
-│   │   ├── providers/         # ThemeProvider & Context providers
-│   │   ├── sections/          # Page sections (Hero, Bento, Projects, Experience, Skills, Contact)
-│   │   ├── shared/            # ThemeToggle, ProjectCard, TechBadge, CommandMenu
-│   │   └── ui/                # Core primitives (Button, Card, Badge, Input, etc.)
-│   ├── content/               # MDX content files for projects and blog posts
-│   ├── data/                  # Strongly-typed data sources
-│   │   ├── experience.ts      # Career & education history
-│   │   ├── personal.ts        # Author bio, titles, links, and status
-│   │   ├── projects.ts        # Portfolio projects catalogue
-│   │   └── skills.ts          # Tech stack & categorized skills
-│   ├── lib/
-│   │   ├── constants.ts       # Site navigation, metadata & links configuration
-│   │   └── utils.ts           # Classnames merging (cn helper), date formatting
-│   └── types/
-│       └── index.ts           # Comprehensive TypeScript interfaces & domain types
-├── components.json            # shadcn/ui configuration
-├── next.config.mjs            # Next.js configuration
-├── package.json               # Dependencies and scripts
-├── postcss.config.mjs         # PostCSS configuration
-├── tailwind.config.ts         # Tailwind theme & design tokens configuration
-└── tsconfig.json              # TypeScript strict configuration
+src/
+├── app/                  # Routes: /, about, experience, certifications, events, projects,
+│                         # projects/[slug], skills, blog, contact — plus sitemap, robots, manifest, OG image, 404
+├── components/
+│   ├── layout/           # Navbar, Footer, Container
+│   ├── sections/         # One component per page body (Hero, Experience, Events, ...)
+│   ├── projects/         # Filterable project archive
+│   └── shared/           # PhotoGallery, Lightbox, CertificateCard, TechTag, EmptyState, brand icons
+├── data/                 # All content, as typed arrays — edit these, not the components
+└── lib/                  # Site config, asset URL helper, utilities
+scripts/fetch-tech-icons.mjs   # Regenerates src/components/shared/tech-icon-paths.ts
+public/_headers                # Cloudflare Pages security and cache headers
 ```
 
----
+## Getting started
 
-## 🚀 Getting Started
+Requires Node.js 20 or newer.
 
-### Prerequisites
+```bash
+npm ci
+cp .env.example .env.local
+npm run dev            # http://localhost:3000
+```
 
-- [Node.js](https://nodejs.org/) (v20 or newer recommended, v24 supported)
-- [pnpm](https://pnpm.io/) (v9 or v11)
+| Script              | Purpose                                         |
+| ------------------- | ----------------------------------------------- |
+| `npm run dev`       | Development server                              |
+| `npm run build`     | Static export to `./out`                        |
+| `npm run lint`      | ESLint                                          |
+| `npm run typecheck` | Generates Next types, then `tsc --noEmit`       |
+| `npm run icons`     | Re-fetch brand icon paths from Simple Icons     |
 
-### Installation
+## Editing content
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/allannuwamanya/portfolio.git
-   cd portfolio
-   ```
+Everything on the site comes from `src/data/`. Each file documents its own shape at the top.
 
-2. Install dependencies:
-   ```bash
-   pnpm install
-   # or: npm install
-   ```
+| File            | Controls                                                     |
+| --------------- | ------------------------------------------------------------ |
+| `personal.ts`   | Name, headline, bio, location, headline numbers              |
+| `projects.ts`   | Project cards and case studies                               |
+| `experience.ts` | Internships, hackathons, bootcamps, fellowships, jobs        |
+| `events.ts`     | Workshops, conferences, talks, with photo galleries          |
+| `certifications.ts` | Certificates and awards, with the full document on click |
+| `skills.ts`     | Tech stack categories                                        |
+| `../lib/constants.ts` | Site URL, social links, navigation                     |
 
-3. Set up environment variables:
-   ```bash
-   cp .env.example .env.local
-   ```
+- **Résumé**: drop a file at `public/resume.pdf`. The résumé buttons appear on the next build; until then they are replaced by "Get in touch".
+- **Photos** live in Cloudflare R2 (below) and are referenced by path.
 
-4. Run the development server:
-   ```bash
-   pnpm run dev
-   ```
+## Images on Cloudflare R2
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+Photos and certificate scans live in the `portfolio-assets` R2 bucket, served from its public address, which is set as `NEXT_PUBLIC_ASSETS_URL`. Paths in the data files (`/events/…`, `/experience/…`, `/certifications/…`) are resolved against it by `src/lib/asset-url.ts`.
 
----
+To add photos:
 
-## 🛠️ Customization
+```bash
+npm run upload -- ~/Downloads/new-photos events     # uploads each file to portfolio-assets/events/
+```
 
-- **Personal Info & Socials**: Edit [`src/data/personal.ts`](src/data/personal.ts) and [`src/lib/constants.ts`](src/lib/constants.ts).
-- **Projects**: Add or modify your featured work in [`src/data/projects.ts`](src/data/projects.ts).
-- **Experience**: Update your work history in [`src/data/experience.ts`](src/data/experience.ts).
-- **Skills**: Update your tech stack in [`src/data/skills.ts`](src/data/skills.ts).
+Then reference them in the data files, e.g. `{ src: "/events/my-photo.jpg", alt: "…" }`. Photos open in a lightbox, so write `alt` as a caption for someone who cannot see the image.
 
----
+The `*.r2.dev` address is fine to start with but is rate limited. For heavier traffic, attach a custom domain to the bucket in the Cloudflare dashboard (R2 → bucket → Settings → Custom Domains) and update `NEXT_PUBLIC_ASSETS_URL`.
 
-## 🚢 Deployment
+## Deploying to Cloudflare Pages
 
-### Vercel (Recommended)
+The site is published to the `allannuwamanya` Pages project (https://allannuwamanya.pages.dev) by direct upload:
 
-1. Push your code to GitHub.
-2. Import the repository into [Vercel](https://vercel.com/new).
-3. Next.js presets will be automatically detected.
-4. Set any required environment variables in your Vercel project settings.
-5. Click **Deploy**.
+1. Put `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` in `.env.local`, along with `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_ASSETS_URL` (see `.env.example`). `.env.local` is gitignored.
+2. Run `npm run deploy`. It builds the static export and uploads `./out`.
 
----
+`NEXT_PUBLIC_*` variables are inlined at build time, so change them and redeploy.
 
-## 📄 License
+To use a custom domain, add it under the Pages project's **Custom domains** tab and set `NEXT_PUBLIC_SITE_URL` to it before the next deploy. Use a token scoped to Pages and R2 only, and rotate it if it is ever shared.
 
-This project is licensed under the MIT License.
+GitHub Actions (`.github/workflows/ci.yml`) runs lint, type check, and build on every push and pull request.
+
+## Contact form
+
+The form posts to Formspree when `NEXT_PUBLIC_FORMSPREE_ENDPOINT` is set. Otherwise it opens a prefilled `mailto:` link, so a visitor's message is never lost.
+
+## License
+
+MIT for the code. Google Sans fonts are under the SIL Open Font License (`public/fonts/OFL.txt`).

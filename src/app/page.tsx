@@ -1,17 +1,23 @@
 import { HeroSection } from "@/components/sections/hero";
 import { ProjectsSection } from "@/components/sections/projects";
+import { GithubStatsSection } from "@/components/sections/github-stats";
 import { ExploreSection } from "@/components/sections/explore";
+import { getGithubSnapshot } from "@/lib/github";
 
 /**
- * The landing page routes people to a section rather than stacking every section
- * on one long scroll. About, Experience, Skills, Writing and Contact each own a
- * page; this page only offers the hero, featured work, and a way in.
+ * The landing page introduces the person (photo, name, what I do), shows the
+ * featured work and live GitHub numbers, then routes to the rest. Everything
+ * the old About page said now lives in the hero.
  */
-export default function HomePage() {
+export default async function HomePage() {
+  // Fetched at build time; null if GitHub was unreachable.
+  const github = await getGithubSnapshot();
+
   return (
     <>
       <HeroSection />
       <ProjectsSection />
+      <GithubStatsSection snapshot={github} />
       <ExploreSection />
     </>
   );

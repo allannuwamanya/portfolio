@@ -7,10 +7,5 @@ export const personalInfo = {
     "Specializing in modern TypeScript (Next.js/NestJS), Python (PyTorch/Speech-AI), and distributed database architectures. Passionate about engineering high-impact tools that bridge technical complexity with elegant user experiences.",
   ],
   availability: "Available for engineering roles & technical leadership",
-  yearsExperience: "3+",
-  highlights: [
-    { label: "Public Datasets Curated", value: "14+" },
-    { label: "Open Source Stars", value: "50+" },
-    { label: "GitHub Contributions", value: "500+" },
-  ],
+  currentlyBuilding: ["LingualDub speech-AI", "Temporal workflows", "Open data"],
 };

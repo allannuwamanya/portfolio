@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Code2, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon, XIcon } from "@/components/shared/brand-icons";
 import { siteConfig, mainNav } from "@/lib/constants";
 
@@ -20,8 +20,8 @@ export function Footer() {
           {/* Brand */}
           <div className="flex flex-col gap-3">
             <Link href="/" className="flex items-center gap-2 font-mono text-sm font-bold">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-accent/40 bg-accent/10 text-accent">
-                <Code2 className="h-4 w-4" />
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-accent/40 bg-accent/10 font-sans text-xs font-black text-accent">
+                AN
               </span>
               <span>
                 {siteConfig.author.split(" ")[0]}
@@ -29,7 +29,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="max-w-xs text-xs text-muted-foreground leading-relaxed">
-              Full-stack engineer crafting high-performance web applications with modern technologies.
+              Full-stack engineer building speech-AI infrastructure, durable backends, and fast, accessible web products from Kampala.
             </p>
           </div>
 

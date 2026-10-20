@@ -19,12 +19,18 @@ export function Navbar() {
   React.useEffect(() => { setIsOpen(false); }, [pathname]);
   React.useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setIsOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
   }, [isOpen]);
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
-    return pathname.startsWith(href);
+    return pathname === href || pathname.startsWith(`${href}/`);
   };
 
   return (
@@ -51,7 +57,7 @@ export function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-0.5 md:flex">
+          <nav className="hidden items-center gap-0.5 lg:flex">
             {mainNav.map((item) => (
               <Link
                 key={item.href}
@@ -76,21 +82,32 @@ export function Navbar() {
           </nav>
 
           {/* Desktop actions */}
-          <div className="hidden items-center gap-2 md:flex">
-            <Link
-              href={siteConfig.links.resume ?? "#"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex h-9 items-center gap-1.5 rounded-lg border border-accent/40 bg-accent/10 px-4 text-xs font-bold text-accent transition-all duration-200 hover:bg-accent/20 hover:border-accent hover:shadow-[0_0_12px_hsl(161_84%_39%_/_0.3)]"
-            >
-              <Download className="h-3 w-3 transition-transform group-hover:-translate-y-0.5" />
-              Résumé
-              <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </Link>
+          <div className="hidden items-center gap-2 lg:flex">
+            {!siteConfig.links.resume && (
+              <Link
+                href="/contact"
+                className="group inline-flex h-9 items-center gap-1.5 rounded-lg border border-accent/40 bg-accent/10 px-4 text-xs font-bold text-accent transition-all duration-200 hover:bg-accent/20 hover:border-accent hover:shadow-[0_0_12px_hsl(161_84%_39%_/_0.3)]"
+              >
+                Get in touch
+                <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </Link>
+            )}
+            {siteConfig.links.resume && (
+              <a
+                href={siteConfig.links.resume}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex h-9 items-center gap-1.5 rounded-lg border border-accent/40 bg-accent/10 px-4 text-xs font-bold text-accent transition-all duration-200 hover:bg-accent/20 hover:border-accent hover:shadow-[0_0_12px_hsl(161_84%_39%_/_0.3)]"
+              >
+                <Download className="h-3 w-3 transition-transform group-hover:-translate-y-0.5" />
+                Résumé
+                <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </a>
+            )}
           </div>
 
           {/* Mobile controls */}
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex items-center gap-2 lg:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
               aria-expanded={isOpen}
@@ -124,19 +141,19 @@ export function Navbar() {
               aria-label="Mobile navigation"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-40 bg-background/60 backdrop-blur-md md:hidden"
+              className="fixed inset-0 z-40 bg-background/60 backdrop-blur-md lg:hidden"
               onClick={() => setIsOpen(false)}
             />
             <motion.div
               initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
               transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-              className="fixed right-0 top-0 z-50 flex h-full w-72 flex-col border-l border-border/60 bg-background/90 backdrop-blur-2xl p-6 md:hidden"
+              className="fixed right-0 top-0 z-50 flex h-full w-72 flex-col border-l border-border/60 bg-background/90 backdrop-blur-2xl p-6 lg:hidden"
             >
               <div className="flex items-center justify-between mb-10">
                 <Link href="/" className="font-mono text-sm font-black" onClick={() => setIsOpen(false)}>
                   {siteConfig.author.split(" ")[0]}<span className="text-accent">.</span>
                 </Link>
-                <button onClick={() => setIsOpen(false)} className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground">
+                <button onClick={() => setIsOpen(false)} aria-label="Close menu" className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground">
                   <X className="h-4 w-4" />
                 </button>
               </div>
@@ -161,15 +178,26 @@ export function Navbar() {
               </nav>
 
               <div className="mt-auto pt-6 border-t border-border/40">
-                <Link
-                  href={siteConfig.links.resume ?? "#"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-accent/40 bg-accent/10 py-3 text-sm font-bold text-accent hover:bg-accent/20"
-                >
-                  <Download className="h-4 w-4" />
-                  Download Resume
-                </Link>
+                {!siteConfig.links.resume && (
+                  <Link
+                    href="/contact"
+                    onClick={() => setIsOpen(false)}
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-accent/40 bg-accent/10 py-3 text-sm font-bold text-accent hover:bg-accent/20"
+                  >
+                    Get in touch
+                  </Link>
+                )}
+                {siteConfig.links.resume && (
+                  <a
+                    href={siteConfig.links.resume}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-accent/40 bg-accent/10 py-3 text-sm font-bold text-accent hover:bg-accent/20"
+                  >
+                    <Download className="h-4 w-4" />
+                    Download résumé
+                  </a>
+                )}
               </div>
             </motion.div>
           </>
