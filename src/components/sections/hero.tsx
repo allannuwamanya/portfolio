@@ -11,14 +11,6 @@ import { siteConfig } from "@/lib/constants";
 import { fadeUp, letterReveal, staggerContainer } from "@/lib/animations";
 import allanImg from "../../../public/images/allan.jpg";
 
-const ROLES = [
-  "Speech-AI & NLP Engineer",
-  "Distributed Systems Architect",
-  "Full-Stack TypeScript & Python",
-  "Temporal.io Workflow Builder",
-  "Open Data & Civic Tech Builder",
-];
-
 const socialLinks = [
   { href: siteConfig.links.github, icon: GithubIcon, label: "GitHub" },
   { href: siteConfig.links.linkedin, icon: LinkedinIcon, label: "LinkedIn" },
@@ -26,37 +18,25 @@ const socialLinks = [
   { href: `mailto:${siteConfig.links.email}`, icon: Mail, label: "Email" },
 ];
 
-function TypewriterRole() {
+/** Types the tagline out once, then leaves a blinking cursor. */
+function TypewriterTagline() {
+  const text = personalInfo.tagline;
   const reduceMotion = useReducedMotion();
-  const [idx, setIdx] = useState(0);
-  const [displayed, setDisplayed] = useState("");
-  const [deleting, setDeleting] = useState(false);
+  const [typed, setTyped] = useState(0);
 
   useEffect(() => {
-    if (reduceMotion) return;
-    const current = ROLES[idx];
-    let timeout: ReturnType<typeof setTimeout>;
-
-    if (!deleting && displayed.length < current.length) {
-      timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 70);
-    } else if (!deleting && displayed.length === current.length) {
-      timeout = setTimeout(() => setDeleting(true), 2200);
-    } else if (deleting && displayed.length > 0) {
-      timeout = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 38);
-    } else if (deleting && displayed.length === 0) {
-      setDeleting(false);
-      setIdx((i) => (i + 1) % ROLES.length);
-    }
+    if (reduceMotion || typed >= text.length) return;
+    const timeout = setTimeout(() => setTyped((n) => n + 1), typed === 0 ? 700 : 55);
     return () => clearTimeout(timeout);
-  }, [displayed, deleting, idx, reduceMotion]);
+  }, [typed, text, reduceMotion]);
 
-  // Reduced motion: show the first role statically instead of typing and deleting.
-  if (reduceMotion) return <span className="text-accent">{ROLES[0]}</span>;
+  // Reduced motion: show the whole line at once.
+  if (reduceMotion) return <span className="text-accent">{text}</span>;
 
   return (
     <span className="inline-flex items-center gap-1">
-      <span className="sr-only">{ROLES[0]}</span>
-      <span className="text-accent" aria-hidden>{displayed}</span>
+      <span className="sr-only">{text}</span>
+      <span className="text-accent" aria-hidden>{text.slice(0, typed)}</span>
       <span className="cursor-blink" aria-hidden />
     </span>
   );
@@ -153,17 +133,6 @@ export function HeroSection() {
 
           {/* Main content */}
           <motion.div variants={staggerContainer} initial="hidden" animate="visible">
-            {/* Availability */}
-            <motion.div variants={fadeUp} className="mb-6">
-              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-400 backdrop-blur-sm">
-                <span
-                  className="h-2 w-2 flex-shrink-0 rounded-full bg-emerald-400"
-                  style={{ animation: "pulse-glow 2s ease-in-out infinite" }}
-                />
-                {personalInfo.availability}
-              </span>
-            </motion.div>
-
             {/* Location (the photo carries it on large screens) */}
             <motion.p variants={fadeUp} className="mb-4 flex items-center gap-1.5 font-mono text-xs text-muted-foreground lg:hidden">
               <MapPin className="h-3 w-3 text-accent" aria-hidden />
@@ -199,26 +168,15 @@ export function HeroSection() {
             {/* Typewriter role */}
             <motion.div variants={fadeUp} className="mb-6 flex items-center gap-2 font-mono text-lg text-muted-foreground sm:text-xl">
               <span className="text-accent">↳</span>
-              <TypewriterRole />
+              <TypewriterTagline />
             </motion.div>
 
             {/* Bio */}
-            <motion.div variants={fadeUp} className="mb-6 max-w-xl space-y-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <motion.div variants={fadeUp} className="mb-9 max-w-xl space-y-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
               {personalInfo.bio.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </motion.div>
-
-            {/* Now building */}
-            <motion.p variants={fadeUp} className="mb-9 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
-              <span className="font-mono text-xs uppercase tracking-widest text-foreground/70">Now building</span>
-              {personalInfo.currentlyBuilding.map((item) => (
-                <span key={item} className="flex items-center gap-2 font-medium text-foreground/90">
-                  <span aria-hidden className="h-1 w-1 rounded-full bg-accent" />
-                  {item}
-                </span>
-              ))}
-            </motion.p>
 
             {/* CTAs */}
             <motion.div variants={fadeUp} className="mb-9 flex flex-wrap gap-3">
@@ -227,7 +185,7 @@ export function HeroSection() {
                 className="group relative inline-flex h-12 items-center gap-2 overflow-hidden rounded-xl bg-accent px-7 text-sm font-bold text-accent-foreground shadow-glow transition-all duration-300 hover:scale-105 hover:shadow-[0_4px_32px_hsl(161_84%_39%_/_0.5)]"
               >
                 <span className="relative z-10 flex items-center gap-2">
-                  See selected work
+                  Explore projects
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-500 group-hover:translate-x-full" />

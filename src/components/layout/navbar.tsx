@@ -7,6 +7,7 @@ import { Menu, X, Download, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
 import { cn } from "@/lib/utils";
 import { mainNav, siteConfig } from "@/lib/constants";
+import { Logo } from "@/components/layout/logo";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -48,12 +49,8 @@ export function Navbar() {
       >
         <div className="container flex h-16 max-w-6xl items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="group flex items-center gap-2.5 font-mono text-sm font-black tracking-tight">
-            <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl border border-accent/40 bg-accent/10 text-accent transition-all duration-300 group-hover:bg-accent/20 group-hover:scale-110">
-              <span className="font-sans text-sm font-black">AN</span>
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-            <span>{siteConfig.author.split(" ")[0]}<span className="text-accent">.</span></span>
+          <Link href="/" aria-label={siteConfig.author} className="group">
+            <Logo shortenOnTight className="text-[15px]" />
           </Link>
 
           {/* Desktop nav */}
@@ -150,8 +147,8 @@ export function Navbar() {
               className="fixed right-0 top-0 z-50 flex h-full w-72 flex-col border-l border-border/60 bg-background/90 backdrop-blur-2xl p-6 lg:hidden"
             >
               <div className="flex items-center justify-between mb-10">
-                <Link href="/" className="font-mono text-sm font-black" onClick={() => setIsOpen(false)}>
-                  {siteConfig.author.split(" ")[0]}<span className="text-accent">.</span>
+                <Link href="/" aria-label={siteConfig.author} className="group" onClick={() => setIsOpen(false)}>
+                  <Logo size={32} className="text-sm" />
                 </Link>
                 <button onClick={() => setIsOpen(false)} aria-label="Close menu" className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground">
                   <X className="h-4 w-4" />
