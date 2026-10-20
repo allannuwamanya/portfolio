@@ -19,7 +19,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Built from the nav so a new page can never be left out of the sitemap.
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${base}/`, changeFrequency: "monthly", priority: 1 },
-    ...mainNav.map((item) => ({
+    ...mainNav
+      .filter((item) => item.href !== "/blog") // placeholder page, kept out of the index
+      .map((item) => ({
       url: `${base}${item.href}/`,
       changeFrequency: "monthly" as const,
       priority: PRIORITY[item.href] ?? 0.6,

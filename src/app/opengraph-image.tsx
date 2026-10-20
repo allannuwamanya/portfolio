@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { siteConfig } from "@/lib/constants";
 
 /**
  * OpenGraph card, rendered to a static PNG at build time.
@@ -7,7 +8,7 @@ import { ImageResponse } from "next/og";
  */
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Allan Nuwamanya — Full-Stack Engineer, AI Speech Systems, Distributed Architectures";
+export const alt = "Allan Nuwamanya — Software Engineer and Langratia co-founder, Uganda";
 
 // Required alongside `output: "export"`: metadata routes must declare that
 // they are static or Next refuses to prerender them.
@@ -52,10 +53,10 @@ export default function OpenGraphImage() {
               marginTop: 20,
             }}
           >
-            Full-Stack Engineer · AI Speech Systems
+            Software Engineer · Langratia Co-founder
           </div>
           <div style={{ display: "flex", fontSize: 36, color: "#8a8880" }}>
-            Distributed Architectures
+            Systems · Infrastructure · AI
           </div>
         </div>
 
@@ -70,7 +71,7 @@ export default function OpenGraphImage() {
             color: "#6f6d66",
           }}
         >
-          <span>allannuwamanya.dev</span>
+          <span>{new URL(siteConfig.url).host}</span>
           <span>Kampala, Uganda</span>
         </div>
       </div>

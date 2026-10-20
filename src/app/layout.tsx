@@ -5,6 +5,8 @@ import NextTopLoader from "nextjs-toploader";
 import { MotionProvider } from "@/components/providers/motion-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { JsonLd } from "@/components/shared/json-ld";
+import { siteJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 // Google Sans ships under the SIL Open Font License (public/fonts/OFL.txt).
@@ -47,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: siteConfig.url,
+    url: `${siteConfig.url}/`,
     title: siteConfig.title,
     description: siteConfig.description,
     siteName: siteConfig.name,
@@ -61,17 +63,6 @@ export const metadata: Metadata = {
     creator: "@allannuwamanya_",
   },
   robots: { index: true, follow: true },
-};
-
-const personJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: siteConfig.name,
-  url: siteConfig.url,
-  jobTitle: "Full-Stack Software Engineer",
-  description: siteConfig.description,
-  address: { "@type": "PostalAddress", addressLocality: "Kampala", addressCountry: "UG" },
-  sameAs: [siteConfig.links.github, siteConfig.links.linkedin, siteConfig.links.twitter].filter(Boolean),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -102,10 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </main>
           <Footer />
         </MotionProvider>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-        />
+        <JsonLd data={siteJsonLd} />
       </body>
     </html>
   );

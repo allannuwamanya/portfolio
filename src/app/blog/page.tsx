@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { BlogPreviewSection } from "@/components/sections/blog-preview";
 
-export const metadata: Metadata = {
-  title: "Writing & Articles",
-  description: "Thoughts on software engineering, system design, and web development.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Writing",
+  description: "Articles by Allan Nuwamanya on software engineering. The first posts are on the way.",
+  path: "/blog",
+  noindex: true,
+});
 
 export default function BlogPage() {
   return (

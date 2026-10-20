@@ -1,6 +1,10 @@
 import { HeroSection } from "@/components/sections/hero";
 import { ExploreSection } from "@/components/sections/explore";
+import { FaqSection } from "@/components/sections/faq";
+import { JsonLd } from "@/components/shared/json-ld";
+import { faqData } from "@/data/faq";
 import { getGithubSnapshot } from "@/lib/github";
+import { faqJsonLd } from "@/lib/seo";
 
 /**
  * The first screen is the whole pitch: who I am (photo, name, what I do) and
@@ -15,6 +19,8 @@ export default async function HomePage() {
     <>
       <HeroSection snapshot={github} />
       <ExploreSection />
+      <FaqSection />
+      <JsonLd data={faqJsonLd(faqData)} />
     </>
   );
 }
