@@ -7,7 +7,7 @@ export const faqData: { question: string; answer: string; link: { label: string;
   {
     question: "Who is Allan Nuwamanya?",
     answer:
-      "Allan Nuwamanya is a software developer from Uganda who builds web applications, digital systems and AI tools. Allan is a co-founder of Langratia, a custom software studio, and is studying for a BSc in Software Engineering at Mbarara University of Science & Technology, graduating in 2027.",
+      "Allan Nuwamanya, who uses the handle allannuwamanya on GitHub, is a software developer from Uganda who builds web applications, digital systems and AI tools. Allan is a co-founder of Langratia, a custom software studio, and is studying for a BSc in Software Engineering at Mbarara University of Science & Technology, graduating in 2027.",
     link: { label: "See Allan's experience and education", href: "/experience" },
   },
   {
@@ -33,6 +33,18 @@ export const faqData: { question: string; answer: string; link: { label: string;
     answer:
       "Allan holds an Introduction to Python Programming certificate from Mbarara University of Science & Technology, Elements of AI from the University of Helsinki and MinnaLearn, AI Career Essentials from ALX Africa, and the 2025 Tech-Preneurship Bootcamp certificate.",
     link: { label: "See the certifications", href: "/certifications" },
+  },
+  {
+    question: "How is Allan ranked among GitHub developers in Uganda?",
+    answer:
+      "As of October 2026, the GitHub account allannuwamanya ranks 12th on committers.app's list of top GitHub committers in Uganda. The list orders Ugandan GitHub users by commit count and changes as it is refreshed, so the position can move.",
+    link: { label: "View the Uganda committers ranking", href: "https://committers.app/uganda" },
+  },
+  {
+    question: "What are Allan Nuwamanya's official profiles?",
+    answer:
+      "Allan Nuwamanya uses the handle allannuwamanya on GitHub (github.com/allannuwamanya) and LinkedIn (linkedin.com/in/allannuwamanya), and allannuwamanya_ on X. This website, allannuwamanya.tech, is the personal site that links to all of them.",
+    link: { label: "Open Allan's GitHub profile", href: "https://github.com/allannuwamanya" },
   },
   {
     question: "Where is Allan based and how can I get in touch?",

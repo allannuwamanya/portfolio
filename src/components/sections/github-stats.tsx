@@ -2,9 +2,10 @@
 
 import * as React from "react";
 import { motion } from "motion/react";
-import { ArrowUpRight, Star } from "lucide-react";
+import { ArrowUpRight, Star, Trophy } from "lucide-react";
 import { GithubIcon } from "@/components/shared/brand-icons";
 import { CountUp } from "@/components/shared/count-up";
+import { githubRanking } from "@/data/recognition";
 import { siteConfig } from "@/lib/constants";
 import type { ContributionDay, GithubSnapshot } from "@/lib/github";
 
@@ -239,6 +240,16 @@ export function GithubDashboard({ snapshot }: { snapshot: GithubSnapshot | null 
             <GithubIcon className="h-4 w-4" />
             @{handle}
             <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden />
+          </a>
+          <a
+            href={githubRanking.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={`Ranking as of ${githubRanking.asOf}, from ${githubRanking.source}`}
+            className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-[11px] font-bold text-amber-300 transition-colors hover:border-amber-400/60"
+          >
+            <Trophy className="h-3 w-3" aria-hidden />
+            #{githubRanking.rank} {githubRanking.label}
           </a>
           <span className="flex items-center gap-2 font-mono text-[11px] text-muted-foreground/80">
             <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-emerald-400" style={{ animation: "pulse-glow 2s ease-in-out infinite" }} />

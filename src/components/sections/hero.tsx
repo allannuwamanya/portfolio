@@ -338,7 +338,7 @@ export function HeroSection({ snapshot }: { snapshot: GithubSnapshot | null }) {
                     key={label}
                     href={href}
                     target={href.startsWith("mailto") ? undefined : "_blank"}
-                    rel="noopener noreferrer"
+                    rel="noopener noreferrer me"
                     aria-label={label}
                     className="flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-card/40 text-muted-foreground backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:border-accent/50 hover:bg-accent/10 hover:text-accent"
                   >
