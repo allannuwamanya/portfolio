@@ -15,6 +15,7 @@ const CATEGORIES: ProjectCategory[] = [
   "Systems & Backend",
   "Fintech & Web3",
   "Open Data",
+  "Developer Tools",
   "Web Apps",
 ];
 

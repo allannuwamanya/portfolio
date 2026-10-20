@@ -2,6 +2,82 @@ import { Project } from "@/types";
 
 export const projectsData: Project[] = [
   {
+    id: "saccade",
+    slug: "saccade",
+    title: "Saccade",
+    tagline: "AI agent engine for truth-anchored LaTeX resumes and ATS optimisation",
+    description:
+      "An agent engine and FastMCP server that keeps one canonical career graph per person, then tailors, writes, ATS-audits and typesets resumes, CVs and cover letters. A guardrail agent checks every claim against its source so the AI cannot invent metrics, and an interactive Web Studio sits on top.",
+    category: "AI & Speech",
+    featured: true,
+    tags: ["Python", "FastAPI", "FastMCP", "React", "TypeScript", "LaTeX"],
+    demoUrl: "https://saccade.langratia.com",
+    repoUrl: "https://github.com/allannuwamanya/saccade",
+    stars: 2,
+    metrics: [
+      { label: "Interfaces", value: "CLI · MCP · Web" },
+      { label: "Models", value: "Bring your own key" },
+    ],
+  },
+  {
+    id: "twill",
+    slug: "twill",
+    title: "Twill",
+    tagline: "Same coding CLI agents. A better interface.",
+    description:
+      "A lightweight desktop app that wraps CLI coding agents such as Claude Code in a clean graphical interface: live agent activity cards, readable diffs, explicit approvals, and sessions you can resume. It upgrades the interface and keeps the agent you already trust. Early development.",
+    category: "Developer Tools",
+    featured: true,
+    tags: ["TypeScript", "Desktop App", "AI Agents", "Developer Tools"],
+    repoUrl: "https://github.com/allannuwamanya/twill",
+    stars: 2,
+    metrics: [{ label: "Status", value: "Early development" }],
+  },
+  {
+    id: "coc-bridge",
+    slug: "coc-bridge",
+    title: "coc-bridge",
+    tagline: "A zero-dependency local proxy that lets Claude Code use OpenCode's free models",
+    description:
+      "A small Node.js proxy that speaks the Anthropic API format to Claude Code and forwards requests to OpenCode's hosted models, streaming responses back as server-sent events. Starts itself with `claude`, adds custom names to the VS Code model picker, and ships a `doctor` command. Published on npm.",
+    category: "Developer Tools",
+    featured: false,
+    tags: ["Node.js", "JavaScript", "CLI Tools", "AI Agents"],
+    demoUrl: "https://www.npmjs.com/package/coc-bridge",
+    repoUrl: "https://github.com/allannuwamanya/coc-bridge",
+    stars: 1,
+    metrics: [
+      { label: "Dependencies", value: "Zero" },
+      { label: "Distribution", value: "npm" },
+    ],
+  },
+  {
+    id: "deepseek-harness-linux-desktop",
+    slug: "deepseek-harness-linux-desktop",
+    title: "DeepSeek Harness for Linux",
+    tagline: "An unofficial Linux desktop port of the DeepSeek Harness agent",
+    description:
+      "A community port that brings the DeepSeek Harness desktop experience to Linux, with a prebuilt .deb package for Ubuntu, Debian, Pop!_OS and Linux Mint. Unofficial, and based on DeepSeek's open-source agent harness.",
+    category: "Developer Tools",
+    featured: false,
+    tags: ["TypeScript", "Linux", "Desktop App", "AI Agents"],
+    repoUrl: "https://github.com/allannuwamanya/deepseek-harness-linux-desktop",
+    metrics: [{ label: "Package", value: ".deb (amd64)" }],
+  },
+  {
+    id: "proofstack",
+    slug: "proofstack",
+    title: "Proof Stack",
+    tagline: "A hands-on playground for proving out modern development stacks",
+    description:
+      "A practical space to experiment, prototype and validate real-world workflows across the technologies I use, turning ideas into working proofs of concept.",
+    category: "Web Apps",
+    featured: false,
+    tags: ["TypeScript", "Next.js", "Prototyping"],
+    repoUrl: "https://github.com/allannuwamanya/proofstack",
+    stars: 11,
+  },
+  {
     id: "lingualdub",
     slug: "lingualdub",
     title: "LingualDub",

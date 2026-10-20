@@ -11,7 +11,7 @@ import { personalInfo } from "@/data/personal";
 import { siteConfig } from "@/lib/constants";
 import type { GithubSnapshot } from "@/lib/github";
 import { fadeUp, letterReveal, staggerContainer } from "@/lib/animations";
-import portrait from "../../../public/images/allan-cutout.webp";
+import portrait from "../../../public/images/allan-circle.jpg";
 import dog from "../../../public/images/dog.jpg";
 
 const socialLinks = [
@@ -78,17 +78,6 @@ function CursorBlob() {
   );
 }
 
-/*
- * The portrait is a cut-out, so it can break out of its circle at the top: the
- * mask below is the circle for the lower half and a plain rectangle for the
- * upper half, which lets the head rise above the disc. The image box is 1.2x the
- * circle's height, so the circle's centre sits at (0.2 + 0.5) / 1.2 of it.
- */
-const CIRCLE_CENTRE = "58.333%";
-const PORTRAIT_MASK =
-  `linear-gradient(#000, #000) top / 100% ${CIRCLE_CENTRE} no-repeat, ` +
-  `radial-gradient(circle closest-side at 50% ${CIRCLE_CENTRE}, #000 99%, transparent 100%) center / 100% 100% no-repeat`;
-
 type Side = "person" | "dog";
 
 /**
@@ -101,19 +90,28 @@ const CARD_FRONT = {
   x: "0%",
   y: "0%",
   scale: 1,
+  rotate: 0,
   filter: "brightness(1)",
   zIndex: 2,
-  transition: { duration: 0.95, ease: [0.22, 1, 0.36, 1] as const },
+  transition: { duration: 1, ease: [0.22, 1, 0.36, 1] as const },
 };
 const CARD_BACK = {
-  x: ["0%", "58%", "27%"],
-  y: ["0%", "6%", "20%"],
-  scale: [1, 0.88, 0.74],
-  filter: "brightness(0.55)",
+  x: ["0%", "60%", "27%"],
+  y: ["0%", "4%", "20%"],
+  scale: [1, 0.9, 0.74],
+  rotate: [0, 7, 5],
+  filter: "brightness(0.6)",
   zIndex: [2, 2, 1],
-  transition: { duration: 1.15, times: [0, 0.5, 1], ease: "easeInOut" as const },
+  transition: { duration: 1.2, times: [0, 0.5, 1], ease: "easeInOut" as const },
 };
 const CARD = { front: CARD_FRONT, back: CARD_BACK };
+
+/** Each photo lands with its own entrance before the swap cycle takes over. */
+const ENTRANCE = (delay: number, rotate: number) => ({
+  initial: { opacity: 0, scale: 0.55, rotate, y: 40 },
+  animate: { opacity: 1, scale: 1, rotate: 0, y: 0 },
+  transition: { duration: 1.05, delay, ease: [0.16, 1, 0.3, 1] as const },
+});
 
 function Portrait() {
   const reduceMotion = useReducedMotion();
@@ -128,10 +126,7 @@ function Portrait() {
   const swap = () => setFront((side) => (side === "person" ? "dog" : "person"));
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.88 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+    <div
       className="relative mx-auto aspect-square w-[var(--portrait)] shrink-0 [--portrait:11.5rem] sm:[--portrait:15rem] lg:mx-0 lg:[--portrait:clamp(15rem,40vh,22rem)]"
     >
       {/* Breathing glow */}
@@ -142,59 +137,52 @@ function Portrait() {
         className="absolute -inset-8 rounded-full bg-[radial-gradient(circle,hsl(var(--accent)/0.4),transparent_65%)] blur-2xl"
       />
 
-      {/* The dog photo */}
-      <motion.div
-        variants={CARD}
-        initial={false}
-        animate={front === "dog" ? "front" : "back"}
-        onClick={swap}
-        className="absolute inset-0 cursor-pointer overflow-hidden rounded-full border-[3px] border-background shadow-[0_20px_60px_-20px_hsl(var(--accent)/0.55)] ring-2 ring-accent/60"
-      >
-        <Image
-          src={dog}
-          alt="My dog, a white and brown puppy, being held in a sunny field"
-          fill
-          sizes="(max-width: 640px) 184px, (max-width: 1024px) 240px, 352px"
-          className="object-cover"
-        />
-      </motion.div>
-
-      {/* The portrait */}
-      <motion.div
-        variants={CARD}
-        initial={false}
-        animate={front === "person" ? "front" : "back"}
-        onClick={swap}
-        className="absolute inset-0 cursor-pointer"
-      >
-        {/* Slowly rotating ring */}
+      {/* The dog photo, which starts out behind and slides clear */}
+      <motion.div {...ENTRANCE(0.35, 10)} className="absolute inset-0">
         <motion.div
-          aria-hidden
-          animate={{ rotate: 360 }}
-          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-          className="absolute -inset-[3px] rounded-full bg-[conic-gradient(from_0deg,hsl(var(--accent)),transparent_35%,hsl(48_94%_61%),transparent_70%,hsl(var(--accent)))]"
-        />
-
-        {/* Disc behind the person */}
-        <div
-          aria-hidden
-          className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_22%,hsl(155_62%_40%/0.55),hsl(155_45%_13%)_55%,hsl(0_0%_4%))]"
-        />
-
-        {/* The person, free to rise above the disc */}
-        <div
-          className="absolute inset-x-0 bottom-0 top-[-20%]"
-          style={{ maskImage: PORTRAIT_MASK, WebkitMaskImage: PORTRAIT_MASK }}
+          variants={CARD}
+          initial={false}
+          animate={front === "dog" ? "front" : "back"}
+          onClick={swap}
+          className="absolute inset-0 cursor-pointer overflow-hidden rounded-full border-[3px] border-background shadow-[0_20px_60px_-20px_hsl(var(--accent)/0.55)] ring-2 ring-accent/60"
         >
           <Image
-            src={portrait}
-            alt={`Portrait of ${personalInfo.name}`}
+            src={dog}
+            alt="My dog, a white and brown puppy, being held in a sunny field"
             fill
-            priority
             sizes="(max-width: 640px) 184px, (max-width: 1024px) 240px, 352px"
-            className="object-contain object-bottom"
+            className="object-cover"
           />
-        </div>
+        </motion.div>
+      </motion.div>
+
+      {/* The portrait, exactly as photographed */}
+      <motion.div {...ENTRANCE(0, -10)} className="absolute inset-0">
+        <motion.div
+          variants={CARD}
+          initial={false}
+          animate={front === "person" ? "front" : "back"}
+          onClick={swap}
+          className="absolute inset-0 cursor-pointer"
+        >
+          {/* Slowly rotating ring */}
+          <motion.div
+            aria-hidden
+            animate={{ rotate: 360 }}
+            transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+            className="absolute -inset-[4px] rounded-full bg-[conic-gradient(from_0deg,hsl(var(--accent)),transparent_35%,hsl(48_94%_61%),transparent_70%,hsl(var(--accent)))]"
+          />
+          <div className="absolute inset-0 overflow-hidden rounded-full border-[3px] border-background shadow-[0_20px_60px_-20px_hsl(var(--accent)/0.55)]">
+            <Image
+              src={portrait}
+              alt={`Portrait of ${personalInfo.name}`}
+              fill
+              priority
+              sizes="(max-width: 640px) 184px, (max-width: 1024px) 240px, 352px"
+              className="object-cover"
+            />
+          </div>
+        </motion.div>
       </motion.div>
 
       {/* Orbiting dots */}
@@ -236,7 +224,7 @@ function Portrait() {
           />
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 }
 

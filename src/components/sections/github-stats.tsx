@@ -210,7 +210,7 @@ export function GithubDashboard({ snapshot }: { snapshot: GithubSnapshot | null 
   }
 
   const stats = [
-    { label: "Repositories", value: snapshot.originalRepos },
+    { label: "Public repositories", value: snapshot.originalRepos },
     { label: "Stars earned", value: snapshot.stars },
     { label: "Followers", value: snapshot.followers },
     ...(snapshot.contributionsLastYear !== null

@@ -24,6 +24,7 @@ export type ProjectCategory =
   | "Systems & Backend"
   | "Fintech & Web3"
   | "Open Data"
+  | "Developer Tools"
   | "Web Apps";
 
 export interface CaseStudyDetails {
@@ -40,7 +41,7 @@ export interface Project {
   title: string;
   tagline: string;
   description: string;
-  category: "AI & Speech" | "Systems & Backend" | "Fintech & Web3" | "Open Data" | "Web Apps";
+  category: Exclude<ProjectCategory, "All">;
   featured: boolean;
   tags: string[];
   demoUrl?: string;
