@@ -24,6 +24,7 @@ export type ProjectCategory =
   | "Systems & Backend"
   | "Fintech & Web3"
   | "Open Data"
+  | "Developer Tools"
   | "Web Apps";
 
 export interface CaseStudyDetails {
@@ -40,7 +41,7 @@ export interface Project {
   title: string;
   tagline: string;
   description: string;
-  category: "AI & Speech" | "Systems & Backend" | "Fintech & Web3" | "Open Data" | "Web Apps";
+  category: Exclude<ProjectCategory, "All">;
   featured: boolean;
   tags: string[];
   demoUrl?: string;
@@ -66,6 +67,13 @@ export type ExperienceKind =
   | "Open Source"
   | "Competition";
 
+/** An organisation named on an experience entry, with an optional logo and website. */
+export interface OrganizationRef {
+  name: string;
+  url?: string;
+  logo?: GalleryImage;
+}
+
 export interface ExperienceItem {
   id: string;
   kind: ExperienceKind;
@@ -86,6 +94,10 @@ export interface ExperienceItem {
   /** Placement, award, or recognition: "1st place", "Top 10 of 120 teams". */
   outcome?: string;
   technologies?: string[];
+  /** The organisation's logo, shown beside the title. Resolved by assetUrl(). */
+  logo?: GalleryImage;
+  /** Organisations this was done together with. They share the entry, logos and title line. */
+  collaborators?: OrganizationRef[];
   /** Photos, the first one is the cover. They open in a lightbox. */
   images?: GalleryImage[];
   /** Certificate, project page, or write-up. */

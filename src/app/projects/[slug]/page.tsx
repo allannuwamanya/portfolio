@@ -138,6 +138,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           {/* Main Case Study Content */}
           <div className="min-w-0 space-y-16">
             
+            {caseStudy ? (
+              <>
             {/* The Problem */}
             <section>
               <h2 className="mb-6 flex items-center gap-2 text-2xl font-black text-foreground">
@@ -145,7 +147,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 The Challenge
               </h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
-                <p>{caseStudy?.challenge}</p>
+                <p>{caseStudy.challenge}</p>
               </div>
             </section>
 
@@ -156,11 +158,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 Architecture &amp; Solution
               </h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed mb-8">
-                <p>{caseStudy?.approach}</p>
+                <p>{caseStudy.approach}</p>
               </div>
 
               {/* ASCII Diagram if it exists */}
-              {caseStudy?.architectureDiagram && (
+              {caseStudy.architectureDiagram && (
                 <div className="my-8 rounded-xl border border-border bg-card p-6 overflow-x-auto">
                   <div className="mb-4 flex items-center gap-2">
                     <Workflow className="h-4 w-4 text-muted-foreground" />
@@ -172,6 +174,19 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </div>
               )}
             </section>
+              </>
+            ) : (
+              <section>
+                <h2 className="mb-6 flex items-center gap-2 text-2xl font-black text-foreground">
+                  <span className="h-6 w-1.5 rounded-full bg-accent" />
+                  Overview
+                </h2>
+                <p className="leading-relaxed text-muted-foreground">{project.description}</p>
+                <p className="mt-4 text-sm text-muted-foreground">
+                  A full write-up of this project is coming soon.{project.repoUrl ? " The source is on GitHub." : ""}
+                </p>
+              </section>
+            )}
 
             {/* Engineering Decisions */}
             {caseStudy?.decisions && caseStudy.decisions.length > 0 && (
