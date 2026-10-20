@@ -80,14 +80,14 @@ The `*.r2.dev` address is fine to start with but is rate limited. For heavier tr
 
 ## Deploying to Cloudflare Pages
 
-The site is published to the `allannuwamanya` Pages project (https://allannuwamanya.pages.dev) by direct upload:
+The site is published to the `allannuwamanya` Pages project, served at https://allannuwamanya.tech (also reachable at allannuwamanya.pages.dev), by direct upload:
 
 1. Put `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` in `.env.local`, along with `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_ASSETS_URL` (see `.env.example`). `.env.local` is gitignored.
 2. Run `npm run deploy`. It builds the static export and uploads `./out`.
 
 `NEXT_PUBLIC_*` variables are inlined at build time, so change them and redeploy.
 
-To use a custom domain, add it under the Pages project's **Custom domains** tab and set `NEXT_PUBLIC_SITE_URL` to it before the next deploy. Use a token scoped to Pages and R2 only, and rotate it if it is ever shared.
+The custom domain is attached under the Pages project's **Custom domains** tab (`www` 301-redirects to the apex), and photos are served from `assets.allannuwamanya.tech`, a custom domain on the R2 bucket. To change the domain, update both in Cloudflare, then set `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_ASSETS_URL` before the next deploy. Use a token scoped to Pages and R2 only, and rotate it if it is ever shared.
 
 GitHub Actions (`.github/workflows/ci.yml`) runs lint, type check, and build on every push and pull request.
 

@@ -6,12 +6,12 @@ export const siteConfig: SiteConfig = {
   title: "Allan Nuwamanya | Software Engineer, Uganda",
   description:
     "Software engineer and Langratia co-founder in Uganda building web apps, backend systems and AI tools. BSc Software Engineering student, graduating 2027.",
-  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://allannuwamanya.dev").replace(/\/$/, ""),
+  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://allannuwamanya.tech").replace(/\/$/, ""),
   links: {
     github: "https://github.com/allannuwamanya",
     linkedin: "https://www.linkedin.com/in/allannuwamanya/",
     twitter: "https://x.com/allannuwamanya_",
-    email: "hello@allannuwamanya.dev",
+    email: "allan.info.comp@gmail.com",
     // Set automatically by next.config.mjs once public/resume.pdf exists.
     resume: process.env.NEXT_PUBLIC_RESUME_URL || undefined,
   },

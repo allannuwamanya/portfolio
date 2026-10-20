@@ -3,7 +3,7 @@
  *
  * Event and experience photos are served from a Cloudflare R2 bucket so the
  * repository stays small. Set NEXT_PUBLIC_ASSETS_URL to the bucket's public
- * origin (e.g. https://assets.allannuwamanya.dev) and write paths relative to
+ * origin (e.g. https://assets.allannuwamanya.tech) and write paths relative to
  * it in the data files: "/events/dsa-workshop.jpg".
  *
  * Absolute URLs pass through untouched, and with no bucket configured the path
