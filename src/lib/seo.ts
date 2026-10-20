@@ -57,9 +57,18 @@ export const siteJsonLd = {
       publisher: { "@id": PERSON_ID },
     },
     {
+      "@type": "ProfilePage",
+      "@id": `${siteConfig.url}/#profilepage`,
+      url: `${siteConfig.url}/`,
+      name: siteConfig.title,
+      isPartOf: { "@id": WEBSITE_ID },
+      mainEntity: { "@id": PERSON_ID },
+    },
+    {
       "@type": "Person",
       "@id": PERSON_ID,
       name: siteConfig.name,
+      alternateName: ["allannuwamanya", "Allan N."],
       url: `${siteConfig.url}/`,
       image: `${siteConfig.url}/images/allan-circle.jpg`,
       email: `mailto:${siteConfig.links.email}`,

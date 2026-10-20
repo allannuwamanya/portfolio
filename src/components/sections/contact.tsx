@@ -123,7 +123,7 @@ export function ContactSection() {
                   key={label}
                   href={href}
                   target={href.startsWith("mailto") ? undefined : "_blank"}
-                  rel="noopener noreferrer"
+                  rel="noopener noreferrer me"
                   className="flex items-center gap-4 rounded-xl border border-border bg-card p-4 text-sm font-medium text-muted-foreground transition-all duration-200 hover:border-accent/40 hover:bg-accent/5 hover:text-foreground"
                 >
                   <Icon className="h-4 w-4 text-accent" />
