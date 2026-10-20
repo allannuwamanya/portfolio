@@ -14,7 +14,9 @@ import {
 import { notFound } from "next/navigation";
 import { GithubIcon } from "@/components/shared/brand-icons";
 import { TechTag } from "@/components/shared/tech-tag";
+import { JsonLd } from "@/components/shared/json-ld";
 import { projectsData } from "@/data/projects";
+import { PERSON_ID, absoluteUrl, breadcrumbJsonLd, pageMetadata, snippet } from "@/lib/seo";
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
@@ -27,12 +29,12 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = projectsData.find((item) => item.slug === slug);
-  return project
-    ? {
-        title: `${project.title} — Case Study & Architecture`,
-        description: `${project.tagline}. ${project.description}`,
-      }
-    : { title: "Project Not Found" };
+  if (!project) return { title: "Project Not Found", robots: { index: false } };
+  return pageMetadata({
+    title: project.caseStudy ? `${project.title}: case study and architecture` : project.title,
+    description: snippet(`${project.tagline.replace(/\.$/, "")}. ${project.description}`),
+    path: `/projects/${project.slug}`,
+  });
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
@@ -46,8 +48,27 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const previous = projectsData[(index - 1 + projectsData.length) % projectsData.length];
   const next = projectsData[(index + 1) % projectsData.length];
 
+  const projectJsonLd = {
+    "@context": "https://schema.org",
+    "@type": project.repoUrl ? "SoftwareSourceCode" : "CreativeWork",
+    name: project.title,
+    description: project.description,
+    url: absoluteUrl(`/projects/${project.slug}`),
+    author: { "@id": PERSON_ID },
+    keywords: project.tags.join(", "),
+    ...(project.repoUrl ? { codeRepositoryURL: project.repoUrl } : {}),
+  };
+
   return (
     <article className="min-h-screen">
+      <JsonLd data={projectJsonLd} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Projects", path: "/projects" },
+          { name: project.title, path: `/projects/${project.slug}` },
+        ])}
+      />
       {/* Hero Header */}
       <div className="border-b border-border bg-card">
         <div className="container max-w-4xl py-24">
@@ -92,7 +113,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg bg-foreground px-6 py-3 text-sm font-bold text-background transition-transform hover:scale-105"
               >
-                Visit Live Site <ExternalLink className="h-4 w-4" />
+                Visit {project.title} live site <ExternalLink className="h-4 w-4" aria-hidden />
               </a>
             )}
             {project.repoUrl && (
@@ -102,7 +123,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-6 py-3 text-sm font-bold text-foreground transition-all hover:bg-secondary"
               >
-                View Source <GithubIcon className="h-4 w-4" />
+                View {project.title} source on GitHub <GithubIcon className="h-4 w-4" aria-hidden />
               </a>
             )}
           </div>

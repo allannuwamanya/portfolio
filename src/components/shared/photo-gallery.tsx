@@ -57,7 +57,7 @@ export function PhotoGallery({ images, title }: { images?: GalleryImage[]; title
             >
               <Image
                 src={assetUrl(image.src)}
-                alt=""
+                alt={image.alt}
                 fill
                 sizes="(max-width: 896px) 100vw, 896px"
                 onError={() => setFailed((prev) => new Set(prev).add(image.src))}

@@ -3,9 +3,9 @@ import { NavItem, SiteConfig } from "@/types";
 export const siteConfig: SiteConfig = {
   name: "Allan Nuwamanya",
   author: "Allan Nuwamanya",
-  title: "Allan Nuwamanya | Full-Stack Software Engineer",
+  title: "Allan Nuwamanya | Software Engineer, Uganda",
   description:
-    "Full-stack software engineer crafting high-performance modern web applications, scalable distributed backends, and responsive user experiences.",
+    "Software engineer and Langratia co-founder in Uganda building web apps, backend systems and AI tools. BSc Software Engineering student, graduating 2027.",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "https://allannuwamanya.dev").replace(/\/$/, ""),
   links: {
     github: "https://github.com/allannuwamanya",

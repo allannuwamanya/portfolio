@@ -24,7 +24,7 @@ export function Footer() {
               <Logo size={32} className="text-sm" />
             </Link>
             <p className="max-w-xs text-xs text-muted-foreground leading-relaxed">
-              Full-stack engineer building speech-AI infrastructure, durable backends, and fast, accessible web products from Kampala.
+              Software engineer and Langratia co-founder in Uganda, building web applications, backend systems and AI tools.
             </p>
           </div>
 
