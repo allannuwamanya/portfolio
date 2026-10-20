@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon, XIcon } from "@/components/shared/brand-icons";
 import { siteConfig, mainNav } from "@/lib/constants";
+import { Logo } from "@/components/layout/logo";
 
 const socialLinks = [
   { href: siteConfig.links.github, icon: GithubIcon, label: "GitHub" },
@@ -19,14 +20,8 @@ export function Footer() {
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           {/* Brand */}
           <div className="flex flex-col gap-3">
-            <Link href="/" className="flex items-center gap-2 font-mono text-sm font-bold">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-accent/40 bg-accent/10 font-sans text-xs font-black text-accent">
-                AN
-              </span>
-              <span>
-                {siteConfig.author.split(" ")[0]}
-                <span className="text-accent">.</span>
-              </span>
+            <Link href="/" aria-label={siteConfig.author} className="group w-fit">
+              <Logo size={32} className="text-sm" />
             </Link>
             <p className="max-w-xs text-xs text-muted-foreground leading-relaxed">
               Full-stack engineer building speech-AI infrastructure, durable backends, and fast, accessible web products from Kampala.
@@ -68,12 +63,6 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-6 text-xs text-muted-foreground">
           <p>© {year} {siteConfig.author}. All rights reserved.</p>
-          <p className="font-mono">
-            Built with{" "}
-            <span className="text-accent">Next.js 15</span>
-            {" & "}
-            <span className="text-accent">Tailwind CSS</span>
-          </p>
         </div>
       </div>
     </footer>

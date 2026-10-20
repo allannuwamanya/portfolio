@@ -41,12 +41,12 @@ export const eventsData: CommunityEvent[] = [
     format: "In person",
     images: [
       {
-        src: "/events/gender-inclusion-group.jpg",
-        alt: "Group photo of the Gender Inclusion Meetup attendees outside the venue at Mbarara University of Science & Technology.",
-      },
-      {
         src: "/events/gender-inclusion-1.jpg",
         alt: "With a fellow attendee outside the venue after the meetup.",
+      },
+      {
+        src: "/events/gender-inclusion-group.jpg",
+        alt: "Group photo of the Gender Inclusion Meetup attendees outside the venue at Mbarara University of Science & Technology.",
       },
       {
         src: "/events/gender-inclusion-2.jpg",
@@ -114,6 +114,32 @@ export const eventsData: CommunityEvent[] = [
       "A student session on getting more out of IEEE, with speakers Eng. Vincent Olema and Vicent Rutagangibwa on career development, professional networking, and global innovation. It also set up collaboration between the IEEE Uganda Section and the Mbarara University Computing Students Association.",
     takeaway:
       "A clearer picture of how to use IEEE as a launchpad for a career in STEM: its academic and professional benefits, and the network behind it.",
+  },
+  {
+    id: "polygon-solidity-2023",
+    title: "Polygon: Smart Contracts with Solidity",
+    host: "Polygon",
+    kind: "Workshop",
+    role: "attended",
+    date: "2023-10-23",
+    location: "Amazon Building (NITA Technology Building), Mbarara, Uganda",
+    format: "In person",
+    images: [
+      {
+        src: "/events/polygon-solidity-group.jpg",
+        alt: "Attendees in matching black \"Prosperity for all\" T-shirts standing at the front of the room, with a presentation laptop in the foreground.",
+      },
+      {
+        src: "/events/polygon-solidity-break-1.jpg",
+        alt: "Three attendees in black event shirts sharing pizza during a break.",
+      },
+      {
+        src: "/events/polygon-solidity-break-2.jpg",
+        alt: "Attendees in Polygon shirts eating pizza during a break.",
+      },
+    ],
+    summary:
+      "A study session on Polygon and on writing smart contracts in Solidity, held at the Amazon Building, home of the NITA Technology Building in Mbarara.",
   },
   {
     id: "chainlink-must",
