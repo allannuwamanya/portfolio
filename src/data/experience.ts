@@ -40,6 +40,7 @@ export const experienceData: ExperienceItem[] = [
     role: "Co-founder",
     organization: "Langratia",
     organizationUrl: "https://langratia.com/",
+    logo: { src: "/experience/logos/langratia.png", alt: "Langratia logo" },
     location: "Uganda",
     startDate: "2026-07",
     endDate: "Present",

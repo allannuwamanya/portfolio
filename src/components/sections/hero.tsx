@@ -4,11 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
-import { ArrowRight, Download, GraduationCap, Mail, Rocket } from "lucide-react";
+import { ArrowRight, Download, GraduationCap, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon, XIcon } from "@/components/shared/brand-icons";
 import { GithubDashboard } from "@/components/sections/github-stats";
 import { personalInfo } from "@/data/personal";
 import { siteConfig } from "@/lib/constants";
+import { assetUrl } from "@/lib/asset-url";
 import type { GithubSnapshot } from "@/lib/github";
 import { fadeUp, letterReveal, staggerContainer } from "@/lib/animations";
 import portrait from "../../../public/images/allan-circle.jpg";
@@ -286,7 +287,7 @@ export function HeroSection({ snapshot }: { snapshot: GithubSnapshot | null }) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1.5 transition-colors hover:border-accent/50 hover:text-accent"
                 >
-                  <Rocket className="h-3.5 w-3.5 text-accent" aria-hidden />
+                  <Image src={assetUrl("/experience/logos/langratia.png")} alt="" width={16} height={16} className="h-4 w-4 rounded-[4px]" />
                   Co-founder, <span className="font-bold">Langratia</span>
                 </a>
               </li>
