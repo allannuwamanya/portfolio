@@ -62,6 +62,7 @@ export const siteJsonLd = {
       name: siteConfig.name,
       url: `${siteConfig.url}/`,
       image: `${siteConfig.url}/images/allan-circle.jpg`,
+      email: `mailto:${siteConfig.links.email}`,
       jobTitle: "Software Engineer",
       description: siteConfig.description,
       address: { "@type": "PostalAddress", addressLocality: "Kampala", addressCountry: "UG" },
