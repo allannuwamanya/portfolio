@@ -1,14 +1,16 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { motion } from "motion/react";
 import { ArrowUpRight, Briefcase, CalendarDays, MapPin, Trophy } from "lucide-react";
 import { experienceData } from "@/data/experience";
-import type { ExperienceItem, ExperienceKind } from "@/types";
+import type { ExperienceItem, ExperienceKind, OrganizationRef } from "@/types";
 import { PhotoGallery } from "@/components/shared/photo-gallery";
 import { EmptyState } from "@/components/shared/empty-state";
 import { TechTag } from "@/components/shared/tech-tag";
 import { fadeUp } from "@/lib/animations";
+import { assetUrl } from "@/lib/asset-url";
 import { cn, formatMonth } from "@/lib/utils";
 
 /** Newest first, grouped by the year each entry started. */
@@ -29,8 +31,31 @@ function formatRange(item: ExperienceItem) {
   return `${start} — ${item.endDate === "Present" ? "Present" : formatMonth(item.endDate)}`;
 }
 
+/** A logo in a light tile. A logo that fails to load is dropped rather than left broken. */
+function OrgLogo({ logo }: { logo: NonNullable<OrganizationRef["logo"]> }) {
+  const [failed, setFailed] = React.useState(false);
+  if (failed) return null;
+
+  return (
+    <span className="flex h-14 min-w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-[#faf9f6] px-2.5 ring-1 ring-border">
+      <Image
+        src={assetUrl(logo.src)}
+        alt={logo.alt}
+        width={160}
+        height={48}
+        onError={() => setFailed(true)}
+        className="h-11 w-auto max-w-[8.5rem] object-contain"
+      />
+    </span>
+  );
+}
+
 function ExperienceCard({ item, index }: { item: ExperienceItem; index: number }) {
   const ongoing = item.endDate === "Present";
+  const organizations: OrganizationRef[] = [
+    { name: item.organization, url: item.organizationUrl, logo: item.logo },
+    ...(item.collaborators ?? []),
+  ];
 
   return (
     <motion.article
@@ -70,23 +95,35 @@ function ExperienceCard({ item, index }: { item: ExperienceItem; index: number }
           )}
         </div>
 
-        <div>
-          <h3 className="text-lg font-black leading-snug text-foreground">{item.role}</h3>
-          <p className="mt-1 text-base font-bold text-accent">
-            {item.organizationUrl ? (
-              <a
-                href={item.organizationUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 hover:underline"
-              >
-                {item.organization}
-                <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
-              </a>
-            ) : (
-              item.organization
-            )}
-          </p>
+        <div className="flex items-center gap-4">
+          {organizations.some((org) => org.logo) && (
+            <div className="flex shrink-0 items-center gap-2">
+              {organizations.map((org) => org.logo && <OrgLogo key={org.name} logo={org.logo} />)}
+            </div>
+          )}
+          <div className="min-w-0">
+            <h3 className="text-lg font-black leading-snug text-foreground">{item.role}</h3>
+            <p className="mt-1 text-base font-bold text-accent">
+              {organizations.map((org, i) => (
+                <React.Fragment key={org.name}>
+                  {i > 0 && <span className="mx-2 font-normal text-muted-foreground">×</span>}
+                  {org.url ? (
+                    <a
+                      href={org.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 hover:underline"
+                    >
+                      {org.name}
+                      <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
+                    </a>
+                  ) : (
+                    org.name
+                  )}
+                </React.Fragment>
+              ))}
+            </p>
+          </div>
         </div>
 
         <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">

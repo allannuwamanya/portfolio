@@ -25,6 +25,8 @@ import { ExperienceItem } from "@/types";
  *     highlights: ["Built X so that Y.", "Shipped Z in 48 hours."],   // optional
  *     outcome: "1st place of 40 teams",        // optional
  *     technologies: ["Python", "FastAPI"],     // optional
+ *     logo: { src: "/experience/logos/acme.jpg", alt: "Acme logo" },   // optional, shown beside the title
+ *     collaborators: [{ name: "Partner Co", url: "https://...", logo: { src: "...", alt: "..." } }],   // optional, shares the entry
  *     images: [                                // optional; first is the cover, all open in a lightbox
  *       { src: "/experience/kampala-hack-2025.jpg", alt: "The team presenting on stage" },
  *     ],
@@ -32,6 +34,39 @@ import { ExperienceItem } from "@/types";
  *   }
  */
 export const experienceData: ExperienceItem[] = [
+  {
+    id: "blue-ox-kampus-2026",
+    kind: "Internship",
+    role: "Intern",
+    organization: "Blue Ox Kampus",
+    organizationUrl: "https://www.blueoxkampus.com/",
+    location: "Mbarara, Uganda",
+    startDate: "2026-06",
+    endDate: "2026-07",
+    summary:
+      "A collaboration internship between Blue Ox Kampus, a mission-funded creative hub in Mbarara that raises and equips faith-driven creatives, and Odd Shoes, a software company in Mbarara that builds tech products for founders.",
+    logo: { src: "/experience/logos/blue-ox-kampus-mark.jpg", alt: "Blue Ox Kampus logo" },
+    collaborators: [
+      {
+        name: "Odd Shoes",
+        url: "https://www.oddshoes.dev/",
+        logo: { src: "/experience/logos/odd-shoes.jpg", alt: "Odd Shoes logo" },
+      },
+    ],
+  },
+  {
+    id: "kreative-campus-2025",
+    kind: "Internship",
+    role: "Intern",
+    organization: "Kreative Campus",
+    organizationUrl: "https://kreativecampus.org/",
+    location: "Mbarara, Uganda",
+    startDate: "2025-06",
+    endDate: "2025-07",
+    summary:
+      "Internship at Kreative Campus, an organisation in Mbarara that helps creatives and startups earn income from their skills by connecting talent with markets, training, and commercialisation.",
+    logo: { src: "/experience/logos/kreative-campus-wide.jpg", alt: "Kreative Campus logo" },
+  },
   {
     id: "paylink-tech-preneurship-2025",
     kind: "Bootcamp",
