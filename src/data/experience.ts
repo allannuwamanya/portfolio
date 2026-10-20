@@ -13,7 +13,7 @@ import { ExperienceItem } from "@/types";
  *
  *   {
  *     id: "exp-kampala-hack-2025",
- *     kind: "Hackathon",   // Internship | Full-time | Contract | Hackathon |
+ *     kind: "Hackathon",   // Founder | Internship | Full-time | Contract | Hackathon |
  *                          // Bootcamp | Fellowship | Volunteer | Open Source | Competition
  *     role: "Backend Engineer",
  *     organization: "Kampala Tech Hackathon",
@@ -34,6 +34,18 @@ import { ExperienceItem } from "@/types";
  *   }
  */
 export const experienceData: ExperienceItem[] = [
+  {
+    id: "langratia-cofounder",
+    kind: "Founder",
+    role: "Co-founder",
+    organization: "Langratia",
+    organizationUrl: "https://langratia.com/",
+    location: "Uganda",
+    startDate: "2026-07",
+    endDate: "Present",
+    summary:
+      "A custom software and enterprise engineering studio that builds digital products, operational systems and secure infrastructure for businesses.",
+  },
   {
     id: "blue-ox-kampus-2026",
     kind: "Internship",

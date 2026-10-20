@@ -57,6 +57,7 @@ export interface Project {
 }
 
 export type ExperienceKind =
+  | "Founder"
   | "Internship"
   | "Full-time"
   | "Contract"
@@ -181,4 +182,16 @@ export interface Certification {
   imageFit?: "document" | "photo";
   /** Public verification page. Only add one you have confirmed opens. */
   verifyUrl?: string;
+}
+
+export interface EducationItem {
+  id: string;
+  degree: string;
+  institution: string;
+  institutionUrl?: string;
+  location: string;
+  /** Year the programme ends, e.g. "2027". */
+  graduation: string;
+  /** True while the programme is still running. */
+  current?: boolean;
 }

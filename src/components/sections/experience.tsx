@@ -3,8 +3,9 @@
 import * as React from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { ArrowUpRight, Briefcase, CalendarDays, MapPin, Trophy } from "lucide-react";
+import { ArrowUpRight, Briefcase, CalendarDays, GraduationCap, MapPin, Trophy } from "lucide-react";
 import { experienceData } from "@/data/experience";
+import { educationData } from "@/data/education";
 import type { ExperienceItem, ExperienceKind, OrganizationRef } from "@/types";
 import { PhotoGallery } from "@/components/shared/photo-gallery";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -275,6 +276,52 @@ export function ExperienceSection() {
             </div>
           </>
         )}
+
+        <div className="mt-20">
+          <div className="mb-6 flex items-center gap-4">
+            <h2 className="font-mono text-2xl font-black text-foreground/80">Education</h2>
+            <div className="h-px flex-1 bg-gradient-to-r from-border to-transparent" />
+          </div>
+          <div className="flex flex-col gap-4">
+            {educationData.map((item) => (
+              <motion.article
+                key={item.id}
+                variants={fadeUp}
+                custom={0}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-60px" }}
+                className="gradient-border bento-card flex items-start gap-4"
+              >
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-accent/30 bg-accent/10 text-accent">
+                  <GraduationCap className="h-5 w-5" aria-hidden />
+                </span>
+                <div className="min-w-0">
+                  <h3 className="text-lg font-black leading-snug text-foreground">{item.degree}</h3>
+                  <p className="mt-1 text-base font-bold text-accent">
+                    {item.institutionUrl ? (
+                      <a href={item.institutionUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                        {item.institution}
+                      </a>
+                    ) : (
+                      item.institution
+                    )}
+                  </p>
+                  <p className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                    <span className="inline-flex items-center gap-1.5">
+                      <CalendarDays className="h-3.5 w-3.5" aria-hidden />
+                      {item.current ? `Graduating ${item.graduation}` : `Graduated ${item.graduation}`}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <MapPin className="h-3.5 w-3.5" aria-hidden />
+                      {item.location}
+                    </span>
+                  </p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

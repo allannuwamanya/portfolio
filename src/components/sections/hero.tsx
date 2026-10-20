@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
-import { ArrowRight, Download, Mail, MapPin } from "lucide-react";
+import { ArrowRight, Download, GraduationCap, Mail, Rocket } from "lucide-react";
 import { GithubIcon, LinkedinIcon, XIcon } from "@/components/shared/brand-icons";
 import { GithubDashboard } from "@/components/sections/github-stats";
 import { personalInfo } from "@/data/personal";
@@ -93,7 +93,7 @@ const CARD_FRONT = {
   rotate: 0,
   filter: "brightness(1)",
   zIndex: 2,
-  transition: { duration: 1, ease: [0.22, 1, 0.36, 1] as const },
+  transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const },
 };
 const CARD_BACK = {
   x: ["0%", "60%", "27%"],
@@ -102,7 +102,7 @@ const CARD_BACK = {
   rotate: [0, 7, 5],
   filter: "brightness(0.6)",
   zIndex: [2, 2, 1],
-  transition: { duration: 1.2, times: [0, 0.5, 1], ease: "easeInOut" as const },
+  transition: { duration: 0.75, times: [0, 0.5, 1], ease: "easeInOut" as const },
 };
 const CARD = { front: CARD_FRONT, back: CARD_BACK };
 
@@ -119,7 +119,7 @@ function Portrait() {
 
   useEffect(() => {
     if (reduceMotion) return;
-    const id = setInterval(() => setFront((side) => (side === "person" ? "dog" : "person")), 5600);
+    const id = setInterval(() => setFront((side) => (side === "person" ? "dog" : "person")), 3200);
     return () => clearInterval(id);
   }, [reduceMotion, front]);
 
@@ -194,21 +194,6 @@ function Portrait() {
       >
         <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 rounded-full bg-amber-400 shadow-[0_0_12px_hsl(48_94%_61%)]" />
         <span className="absolute bottom-[14%] right-[3%] h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_hsl(var(--accent))]" />
-      </motion.div>
-
-      {/* Location chip */}
-      <motion.div
-        initial={{ opacity: 0, x: -16 }}
-        animate={{ opacity: 1, x: 0, y: [0, -5, 0] }}
-        transition={{
-          opacity: { delay: 1, duration: 0.5 },
-          x: { delay: 1, duration: 0.5 },
-          y: { delay: 1.5, duration: 5, repeat: Infinity, ease: "easeInOut" },
-        }}
-        className="glass pointer-events-none absolute -left-3 bottom-[14%] z-[4] flex items-center gap-1.5 rounded-full px-3 py-1.5 font-mono text-[11px] text-foreground/90 sm:-left-6"
-      >
-        <MapPin className="h-3 w-3 text-accent" aria-hidden />
-        {personalInfo.location.split(" / ")[0]}
       </motion.div>
 
       {/* Which photo is in front */}
@@ -292,6 +277,24 @@ export function HeroSection({ snapshot }: { snapshot: GithubSnapshot | null }) {
               {/* Dropped on short desktop screens so the dashboard still fits */}
               <p className="lg:[@media(max-height:840px)]:hidden">{personalInfo.bio[1]}</p>
             </motion.div>
+
+            <motion.ul variants={fadeUp} className="mb-6 flex flex-wrap gap-2 text-xs text-foreground/85">
+              <li>
+                <a
+                  href="https://langratia.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1.5 transition-colors hover:border-accent/50 hover:text-accent"
+                >
+                  <Rocket className="h-3.5 w-3.5 text-accent" aria-hidden />
+                  Co-founder, <span className="font-bold">Langratia</span>
+                </a>
+              </li>
+              <li className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1.5">
+                <GraduationCap className="h-3.5 w-3.5 text-accent" aria-hidden />
+                BSc Software Engineering, <span className="font-bold">Mbarara University of Science &amp; Technology</span> &middot; 2027
+              </li>
+            </motion.ul>
 
             <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-3">
               <Link
